@@ -1,0 +1,28 @@
+{
+    "port":
+    [
+        {
+            "device":"/dev/ttyUSB0",
+            "baud": 3000000
+        }
+    ],
+    
+    "motor":
+    [
+        {
+            "name": "my_dxl_roll",
+            "type": "XM430-W210",
+            "id": 1,
+            "port": 0,
+            "protocol": 2
+        },
+        {
+            "name": "my_dxl_pitch",
+            "type": "XM430-W210",
+            "id": 2,
+            "port": 0,
+            "protocol" : 2
+        }
+    ]
+}
+

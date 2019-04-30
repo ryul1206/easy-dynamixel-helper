@@ -1,0 +1,9 @@
+{
+    "TORQUE_ON_OFF" : 24,
+    "LED" : 25,
+    "GOAL_POS_L": 30,
+    "GOAL_POS_H": 31,
+    "PRESENT_POS_L":36,
+    "PRESENT_POS_H":37,
+    "BAUDRATE":4
+}

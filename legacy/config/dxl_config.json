@@ -1,0 +1,28 @@
+{
+    "port":
+    [
+        {
+            "device":"/dev/ttyUSB1",
+            "baud": 1000000
+        }
+    ],
+    
+    "motor":
+    [
+        {
+            "name": "my_dxl0",
+            "type": "AX-12",
+            "id": 1,
+            "port": 0,
+            "protocol": 1
+        },
+        {
+            "name": "my_dxl1",
+            "type": "AX-12",
+            "id": 2,
+            "port": 0,
+            "protocol" : 1
+        }
+    ]
+}
+
