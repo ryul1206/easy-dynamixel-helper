@@ -1,0 +1,77 @@
+{
+  "eeprom": {
+    "model number": 0,
+    "model information": 2,
+    "firmware version": 6,
+    "id": 7,
+    "baud rate": 8,
+    "return delay time": 9,
+    "drive mode": 10,
+    "operating mode": 11,
+    "secondary(shadow) id": 12,
+    "protocol version": 13,
+    "homing offset": 20,
+    "moving threshold": 24,
+    "temperature limit": 31,
+    "max voltage limit": 32,
+    "min voltage limit": 34,
+    "pwm limit": 36,
+    "current limit": 38,
+    "velocity limit": 44,
+    "max position limit": 48,
+    "min position limit": 52,
+    "shutdown": 63
+  },
+  "ram": {
+    "torque enable": 64,
+    "led": 65,
+    "status return level": 68,
+    "registered instruction": 69,
+    "hardware error status": 70,
+    "velocity i gain": 76,
+    "velocity p gain": 78,
+    "position d gain": 80,
+    "position i gain": 82,
+    "position p gain": 84,
+    "feedforward 2nd gain": 88,
+    "feedforward 1st gain": 90,
+    "bus watchdog": 98,
+    "goal pwm": 100,
+    "goal current": 102,
+    "goal velocity": 104,
+    "profile acceleration": 108,
+    "profile velocity": 112,
+    "goal position": 116,
+    "realtime tick": 120,
+    "moving": 122,
+    "moving status": 123,
+    "present pwm": 124,
+    "present current": 126,
+    "present velocity": 128,
+    "present position": 132,
+    "velocity trajectory": 136,
+    "position trajectory": 140,
+    "present input voltage": 144,
+    "present temperature": 146,
+    "indirect address section 1": {
+      "byte size": 2,
+      "begin": { "idx": 1, "addr": 168 },
+      "end": { "idx": 28, "addr": 222 }
+    },
+    "indirect data section 1": {
+      "byte size": 1,
+      "begin": { "idx": 1, "addr": 224 },
+      "end": { "idx": 28, "addr": 251 }
+    },
+    "indirect address section 2": {
+      "byte size": 2,
+      "begin": { "idx": 29, "addr": 578 },
+      "end": { "idx": 56, "addr": 632 }
+    },
+    "indirect data section 2": {
+      "byte size": 1,
+      "begin": { "idx": 29, "addr": 634 },
+      "end": { "idx": 56, "addr": 661 }
+    }
+  }
+}

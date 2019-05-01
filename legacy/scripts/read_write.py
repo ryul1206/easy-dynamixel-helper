@@ -30,27 +30,6 @@
 #
 
 from dynamixel_sdk import *                    # Uses Dynamixel SDK library
-import os
-
-if os.name == 'nt':
-    import msvcrt
-
-    def getch():
-        return msvcrt.getch().decode()
-else:
-    import sys
-    import tty
-    import termios
-    fd = sys.stdin.fileno()
-    old_settings = termios.tcgetattr(fd)
-
-    def getch():
-        try:
-            tty.setraw(sys.stdin.fileno())
-            ch = sys.stdin.read(1)
-        finally:
-            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
-        return ch
 
 
 # Control table address
@@ -58,6 +37,10 @@ else:
 ADDR_PRO_TORQUE_ENABLE = 64
 ADDR_PRO_GOAL_POSITION = 116
 ADDR_PRO_PRESENT_POSITION = 132
+
+
+#########################
+
 
 # Protocol version
 # See which protocol version is used in the Dynamixel
@@ -111,6 +94,13 @@ else:
     print("Press any key to terminate...")
     getch()
     quit()
+
+
+
+
+
+
+
 
 # Enable Dynamixel Torque
 dxl_comm_result, dxl_error = packetHandler.write1ByteTxRx(
