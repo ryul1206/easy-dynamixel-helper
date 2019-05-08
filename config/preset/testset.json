@@ -1,0 +1,14 @@
+[
+  {
+    "device": "/dev/ttyUSB0",
+    "baudrate": 115200,
+    "protocol version": 2.0,
+    "motors": [
+      {
+        "alias": "joint_L1",
+        "model": "XM430-W210",
+        "id": 1
+      }
+    ]
+  }
+]

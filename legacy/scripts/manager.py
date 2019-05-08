@@ -8,11 +8,11 @@ import dynamixel_functions as dxl
 import json
 
 
-def read_json(filename):
-    fd = open(filename)
-    json_data = fd.read()
-    fd.close()
-    return json.loads(json_data)
+# def read_json(filename):
+#     fd = open(filename)
+#     json_data = fd.read()
+#     fd.close()
+#     return json.loads(json_data)
 
 
 class motor_set:
@@ -66,7 +66,7 @@ class motor_set:
 class motor_operation:
     def __init__(self, pkg_dir):
 
-        data = read_json(pkg_dir+"/config/dxl_config_xm.json")
+        # data = read_json(pkg_dir+"/config/dxl_config_xm.json")
         port_nums = []
         # open all ports in config file
         for port in data["port"]:

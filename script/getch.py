@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
 import os
 
 
+# This function get one 'char' without pressing 'enter'
+# And also return one char you pressed.
 if os.name == 'nt':
     import msvcrt
 
@@ -25,5 +26,19 @@ else:
         return ch
 
 
+def exit_with_getch(msg):
+    print(msg)
+    print("Press any key to continue ...")
+    getch()
+    exit()
+
+
+def ask_continue():
+    print("Press any key to continue ... (Press ESC to exit)")
+    if getch() == chr(0x1b):
+        exit()
+
+
 if __name__ == "__main__":
+    print("Press any key to continue ...")
     print(getch())
