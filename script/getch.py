@@ -28,12 +28,12 @@ else:
 
 def exit_with_getch(msg):
     print(msg)
-    print("Press any key to continue ...")
+    print("Press any key to exit ...")
     getch()
     exit()
 
 
-def ask_continue():
+def ask_continue_getch():
     print("Press any key to continue ... (Press ESC to exit)")
     if getch() == chr(0x1b):
         exit()
