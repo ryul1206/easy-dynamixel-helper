@@ -1,6 +1,7 @@
 ####################################
 #          GitIgnore List          #
 ####################################
+# temp
 # python
 # c
 # cpp
@@ -10,6 +11,8 @@
 # windows
 # ros
 ####################################
+
+temp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
