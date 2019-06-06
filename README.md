@@ -1,18 +1,22 @@
 # Easy Dynamixel Helper
 
+![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
+
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-1. [Dependencies](#dependencies)
-   1. [1. Python Environment](#1-python-environment)
-      1. [Dynamixel SDK Setup](#dynamixel-sdk-setup)
-2. [About The Licenses](#about-the-licenses)
-3. [TODO](#todo)
+1. [Setup](#setup)
+   1. [For Python](#for-python)
+      1. [Dynamixel SDK Installation](#dynamixel-sdk-installation)
+2. [Licenses](#licenses)
 
-## Dependencies
+## Setup
 
-### 1. Python Environment
+### For Python
 
-#### [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) Setup
+Python 2.x or Python 3.x
+
+#### [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) Installation
 
 1. Clone the SDK repository into your folder, for example, `~/lib`.
 
@@ -32,15 +36,14 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
    sudo python setup.py install
    ```
 
-## About The Licenses
+## Licenses
 
 The contents of this repository are subject to the MIT license by default, except as noted below.
 
 1. Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)
    <!-- 1. `dxl_helper.py` is modified from `read_write.py` of `${DynamixelSDK}/python/...` -->
 
-## TODO
+<!-- ## TODO
 
 - [ ] Prototype
-- [ ] Update Readme
-- [ ] C++
+- [ ] C++ -->
