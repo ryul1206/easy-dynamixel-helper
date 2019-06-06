@@ -7,8 +7,6 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 
 **[Warning]** Currently, this helper has not been tested. But you can use this if you want. Feedback is always welcome.
 
-**[경고]** 현재, 이 helper는 테스트되지 않았습니다. 그래도 원한다면 이용할 수 있습니다. 피드백은 언제나 환영합니다.
-
 1. [Setup](#setup)
    1. [For Python](#for-python)
       1. [Dynamixel SDK Installation](#dynamixel-sdk-installation)
