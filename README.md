@@ -5,7 +5,9 @@
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-**[Warning]** Currently, this helper has not been tested. But you can use this if you want. Feedback is always welcome.
+Feedback is always welcome.
+
+**[Warning]** Currently, I have not tested this helper. (The test will be on July)
 
 1. [Setup](#setup)
    1. [For Python](#for-python)
