@@ -79,7 +79,7 @@ TODO: detail tutorial / use new markdown.
 
 TODO: release version 1.0.0
 
-- Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
+-   Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
 
 ## Test Notes
 
