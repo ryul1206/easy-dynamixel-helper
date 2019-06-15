@@ -10,23 +10,22 @@ import copy
 
 
 def random_string(string_length=10):
-    """Generate a random string of fixed length """
+    """Generate a random string of fixed length."""
     letters = string.ascii_lowercase
     return ''.join(random.choice(letters) for i in range(string_length))
 
 
-def byteify(input):
+def byteify(unicode_json):
     # Thanks to Mark Amery from StackOverflow.
     # https://stackoverflow.com/questions/956867/how-to-get-string-objects-instead-of-unicode-from-json
-    if isinstance(input, dict):
+    if isinstance(unicode_json, dict):
         return {byteify(key): byteify(value)
-                for key, value in input.iteritems()}
-    elif isinstance(input, list):
-        return [byteify(element) for element in input]
-    elif isinstance(input, unicode):
-        return input.encode('utf-8')
-    else:
-        return input
+                for key, value in unicode_json.iteritems()}
+    elif isinstance(unicode_json, list):
+        return [byteify(element) for element in unicode_json]
+    elif isinstance(unicode_json, unicode):
+        return unicode_json.encode('utf-8')
+    return unicode_json
 
 
 class DxlHelper:
@@ -46,9 +45,8 @@ class DxlHelper:
         #     windows: "COM1"
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
-        # TODO try except (AttributeError)
-        self.port_handlers = [dxlsdk.PortHandler(
-            preset[i]['device']) for i in range(num_port)]
+        self.port_handlers = [dxlsdk.PortHandler(preset[i]['device'])
+                              for i in range(num_port)]
 
         for i in range(num_port):
             name = preset[i]['device']
@@ -72,7 +70,6 @@ class DxlHelper:
         packet_hd = {}
         for i in range(num_port):
             version = preset[i]['protocol_version']
-            # TODO try except (AttributeError)
             if version not in packet_hd:
                 packet_hd[version] = dxlsdk.PacketHandler(version)
             self.packet_handlers.append(packet_hd[version])
@@ -88,14 +85,14 @@ class DxlHelper:
                 motor = copy.deepcopy(m)
                 motor.update({'port': port_idx})
                 # Empty alias
-                if len(motor['alias']) == 0:
+                if not motor['alias']:
                     motor['alias'] = random_string()
-                # Alias
+                # Duplicate Alias
                 if motor['alias'] in self.motors_alias:
                     getch_exit("[Error] Duplicate Motor Alias Exists")
                 else:
                     self.motors_alias[motor['alias']] = motor
-                # ID
+                # Duplicate ID
                 if motor['id'] in self.motors_id:
                     getch_exit("[Error] Duplicate Motor ID Exists")
                 else:
@@ -113,7 +110,6 @@ class DxlHelper:
             ctable_file = ctable_path + model + ".json"
             ctable = json.load(open(ctable_file, 'r'), object_hook=byteify)
             self.ctables[model] = ctable
-            # TODO Verify the key of control table is correct
 
         print("Succeeded to read the motor config! \
             You have {} motor(s).".format(len(self.motors_id)))
@@ -130,14 +126,12 @@ class DxlHelper:
         elif dxl_error != 0:
             print(packet_handler.getRxPacketError(dxl_error))
             return False
-        else:
-            return True
+        return True
 
     def _find_motor(self, alias_or_id):
-        if isinstance(alias_or_id, str):  # Alias
-            return self.motors_alias[alias_or_id]
-        else:  # ID
-            return self.motor_id[alias_or_id]
+        motor_map = self.motors_alias if isinstance(alias_or_id, str)\
+            else self.motors_id
+        return motor_map[alias_or_id]
 
     def _find_four(self, alias_or_id):
         motor = self._find_motor(alias_or_id)
@@ -163,39 +157,3 @@ class DxlHelper:
         position, dxl_result, dxl_error = packethd.read4ByteTxRx(
             porthd, mid, addr['ram']['present position'])
         return position, self._is_success(packethd, dxl_result, dxl_error)
-
-
-if __name__ == "__main__":
-    # Example code
-    helper = DxlHelper("../config/preset/example_2port_4motor.json")
-
-    # Enable Dynamixel torque
-    motor_id = 1
-    goals = [10, 4000]
-    index = 0
-
-    if helper.set_torque(motor_id, True):
-        print("Successfully connected: Dynamixel ID {}".format(motor_id))
-
-    count = 0
-    while count < 10:
-        print("Loop {}".format(count))
-        getch_ask()
-
-        helper.set_goal_position(index)
-
-        while True:
-            # Read present position
-            position, result = helper.get_present_position()
-            print("[ID:%03d] GoalPos:%03d  PresPos:%03d" %
-                  (motor_id, goals[index], position))
-            # Threshold
-            if not abs(goals[index] - position) > 20:
-                break
-
-        # Change goal position
-        index = (index + 1) % 2
-
-    # Disable Dynamixel Torque
-    helper.set_torque(motor_id, False)
-    getch_exit("Example code was finished.")
