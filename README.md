@@ -73,13 +73,13 @@ TODO: detail tutorial / use new markdown.
 ## Authors
 
 1. **Hong-ryul Jung** - _Initial work_ - [ryul1206](https://github.com/ryul1206)
-2. **Il-ho Oh** - _Initial work_
+2. **Il-ho Oh** - _Initial work_ - [ohilho](https://github.com/ohilho)
 
 ## Release Notes
 
 TODO: release version 1.0.0
 
--   Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
+- Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
 
 ## Test Notes
 
@@ -101,4 +101,4 @@ TODO: Verify control table (key, addr, and etc.)
 
 The contents of this repository are subject to the [MIT license](/LICENSE) by default, except as noted below.
 
--   Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)
+- Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)
