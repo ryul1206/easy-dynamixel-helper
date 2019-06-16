@@ -43,6 +43,14 @@ def byteify(unicode_json):
 
 
 class DxlHelper:
+    class AliasedKey:
+        def __init__(self, key, alias):
+            self.key = key
+            self.alias = alias
+
+        def __eq__(self, other):
+            return other is self.key or other is self.alias
+
     def __init__(self, preset_file):
         # Load preset
         preset = json.load(open(preset_file, 'r'), object_hook=byteify)
@@ -59,18 +67,18 @@ class DxlHelper:
         #     windows: "COM1"
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
-        self.port_handlers = [dxlsdk.PortHandler(preset[i]['device'])
-                              for i in range(num_port)]
 
-        for i in range(num_port):
-            name = preset[i]['device']
+        self.port_handlers = [dxlsdk.PortHandler(p['device']) for p in preset]
+
+        for i, p in enumerate(preset):
+            name = p['device']
             # Open port
             if self.port_handlers[i].openPort():
                 print("Succeeded to open the port: " + name)
             else:
                 getch_exit("Failed to open the port: " + name)
             # Set baudrate
-            if self.port_handlers[i].setBaudRate(preset[i]['baudrate']):
+            if self.port_handlers[i].setBaudRate(p['baudrate']):
                 print("Succeeded to change the baudrate: " + name)
             else:
                 getch_exit("Failed to change the baudrate: " + name)
@@ -91,32 +99,36 @@ class DxlHelper:
         ############################################
         #                 Motor
         ############################################
-        self.motors_alias = {}
-        self.motors_id = {}
-        for port_idx in range(num_port):
-            for m in preset[port_idx]['motors']:
+        #
+
+        self.motors = {}
+        for port_idx, ps in enumerate(preset):
+            for m in ps['motors']:
                 # Port number: int
                 motor = copy.deepcopy(m)
                 motor.update({'port': port_idx})
+
+                # make key of motors dict.
+
                 # Empty alias
                 if not motor['alias']:
                     motor['alias'] = random_string()
-                # Duplicate Alias
-                if motor['alias'] in self.motors_alias:
+                key = self.AliasedKey(motor['id'], motor['alias'])
+
+                # Duplicate Alias rejection
+                if motor['alias'] in self.motors:
                     getch_exit("[Error] Duplicate Motor Alias Exists")
-                else:
-                    self.motors_alias[motor['alias']] = motor
-                # Duplicate ID
-                if motor['id'] in self.motors_id:
+                # Duplicate ID rejection\
+                elif motor['id'] in self.motors_id:
                     getch_exit("[Error] Duplicate Motor ID Exists")
                 else:
-                    self.motors_id[motor['id']] = motor
+                    self.motors[key] = motor
 
         # Load control tables
         ctable_path = "../config/control_table/"
         self.ctables = {}
-        for key in self.motors_id:
-            model = self.motors_id[key]['model']
+        for motoer_key, motor in self.motors:
+            model = self.motor['model']
             # Check that already loaded
             if model in self.ctables:
                 continue
@@ -131,6 +143,8 @@ class DxlHelper:
     def __del__(self):
         # Close ports
         for port in self.port_handlers:
+            # if port.isOpen():
+            #     port.closePort()
             port.closePort()
 
     def _is_success(self, packet_handler, dxl_result, dxl_error):
@@ -143,9 +157,7 @@ class DxlHelper:
         return True
 
     def _find_motor(self, alias_or_id):
-        motor_map = self.motors_alias if isinstance(alias_or_id, str)\
-            else self.motors_id
-        return motor_map[alias_or_id]
+        return self.motors[alias_or_id]
 
     def _find_four(self, alias_or_id):
         motor = self._find_motor(alias_or_id)
