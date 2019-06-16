@@ -2,11 +2,13 @@
 
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/python-pkg)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/python-pkg)
 
 TODO: a badge of pypi release version (/pypi/v/:packageName.svg)
 
-This helper is a python wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
+This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
+
+Supported language: Python
 
 **[Warning]** Currently, I have not tested this helper. (The test will be on **July**)
 
@@ -17,14 +19,13 @@ TODO: update figure (direct writing on the control table)
 <!-- Your code ===> DXL Helper ===> Your motor(control table) -->
 
 1. [Getting Started](#getting-started)
-   1. [Prerequisites](#prerequisites)
-   2. [Installing for Python](#installing-for-python)
+    1. [Prerequisites](#prerequisites)
+    2. [Installation](#installation)
 2. [Simple Example](#simple-example)
 3. [Tutorial](#tutorial)
-4. [Authors](#authors)
+4. [Maintainers](#maintainers)
 5. [Release Notes](#release-notes)
-6. [Test Notes](#test-notes)
-7. [Licenses](#licenses)
+6. [Licenses](#licenses)
 
 <!-- https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 -->
 
@@ -43,7 +44,7 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
     git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
     ```
 
-2. Go into a `/DynamixelSDK/python` folder of your cloned SDK.
+2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
 
     ```bash
     cd ${your_download_path}/DynamixelSDK/python
@@ -58,7 +59,7 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 </p>
 </details>
 
-### Installing for Python
+### Installation
 
 TODO: pip install will be update
 
@@ -70,32 +71,14 @@ TODO: one motor
 
 TODO: detail tutorial / use new markdown.
 
-## Authors
+## Maintainers
 
-1. **Hong-ryul Jung** - _Initial work_ - [ryul1206](https://github.com/ryul1206)
-2. **Il-ho Oh** - _Initial work_ - [ohilho](https://github.com/ohilho)
+- **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
+- **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
 
 ## Release Notes
 
-TODO: release version 1.0.0
-
-- Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
-
-## Test Notes
-
-TODO: test history
-
-TODO: Is byteify also return some Int?
-
-TODO: Comment python description for all functions [link](https://www.python.org/dev/peps/pep-0257/)
-
-TODO: Test in both Python 2.x and Python 3.x
-
-TODO: Verify actual motor driving
-
-TODO: Wrapping more features of the SDK
-
-TODO: Verify control table (key, addr, and etc.)
+[here](/CHANGELOG)
 
 ## Licenses
 

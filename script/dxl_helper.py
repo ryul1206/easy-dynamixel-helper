@@ -8,6 +8,20 @@ import random
 import string
 import copy
 
+# TODO: test history
+
+# TODO: Is byteify also return some Int?
+
+# TODO: Comment python description for all functions [link](https://www.python.org/dev/peps/pep-0257/)
+
+# TODO: Test in both Python 2.x and Python 3.x
+
+# TODO: Verify actual motor driving
+
+# TODO: Wrapping more features of the SDK
+
+# TODO: Verify control table (key, addr, and etc.)
+
 
 def random_string(string_length=10):
     """Generate a random string of fixed length."""
