@@ -99,8 +99,6 @@ class DxlHelper:
         ############################################
         #                 Motor
         ############################################
-        #
-
         self.motors = {}
         for port_idx, ps in enumerate(preset):
             for m in ps['motors']:

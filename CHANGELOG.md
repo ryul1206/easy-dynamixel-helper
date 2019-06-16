@@ -12,6 +12,7 @@ REMOVE : feature removed
 ### Future
 
 - Indirect address section
+- Check what happens when duplicate dxl_helper (about Singleton)
 
 ### In progress
 
