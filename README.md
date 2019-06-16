@@ -2,7 +2,7 @@
 
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/python-pkg)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/python-pkg)
+[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/master)
 
 TODO: a badge of pypi release version (/pypi/v/:packageName.svg)
 
