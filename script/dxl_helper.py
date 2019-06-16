@@ -91,6 +91,7 @@ class DxlHelper:
         self.packet_handlers = []
         packet_hd = {}
         for i in range(num_port):
+            # !!! TODO : Is here range required?????
             version = preset[i]['protocol_version']
             if version not in packet_hd:
                 packet_hd[version] = dxlsdk.PacketHandler(version)
@@ -158,6 +159,8 @@ class DxlHelper:
         return self.motors[alias_or_id]
 
     def _find_four(self, alias_or_id):
+        # TODO : We don't need to find four, everytime.
+        #        Change to only once.
         motor = self._find_motor(alias_or_id)
         addr = self.catbles[mtr['model']]
         porthd = self.port_handlers[mtr['port']]
