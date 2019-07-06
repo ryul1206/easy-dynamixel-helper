@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import os
 
-
 # This function get one 'char' without pressing 'enter'
 # And also return one char you pressed.
 if os.name == 'nt':
@@ -26,7 +25,7 @@ else:
         return ch
 
 
-def getch_exit(msg):
+def getch_exit(msg=''):
     print(msg)
     print("Press any key to exit ...")
     getch()
@@ -34,7 +33,7 @@ def getch_exit(msg):
 
 
 def getch_ask(msg=''):
-    if len(msg) > 0:
+    if msg:
         print(msg)
     print("Press any key to continue ... (Press ESC to exit)")
     if getch() == chr(0x1b):

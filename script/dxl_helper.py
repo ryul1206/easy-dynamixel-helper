@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import dynamixel_sdk as dxlsdk
-import json
+# SDK Manual
+# http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_porthandler/#python
+
 from getch import getch_exit, getch_ask
-import random
+import dynamixel_sdk as dxlsdk
+# import random
 import string
 import copy
+import json
 
 # TODO: test history
 
@@ -23,10 +26,10 @@ import copy
 # TODO: Verify control table (key, addr, and etc.)
 
 
-def random_string(string_length=10):
-    """Generate a random string of fixed length."""
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(string_length))
+# def random_string(string_length=10):
+#     """Generate a random string of fixed length."""
+#     letters = string.ascii_lowercase
+#     return ''.join(random.choice(letters) for i in range(string_length))
 
 
 def byteify(unicode_json):
@@ -68,46 +71,84 @@ class DxlHelper:
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        self.port_handlers = [dxlsdk.PortHandler(p['device']) for p in preset]
-
-        for i, p in enumerate(preset):
-            name = p['device']
+        self.port_handlers = []
+        for port in preset:
+            # Port handle
+            pth = dxlsdk.PortHandler(port['device'])
             # Open port
-            if self.port_handlers[i].openPort():
-                print("Succeeded to open the port: " + name)
+            if pth.openPort():
+                print("Succeeded to open the port: " + port['device'])
             else:
-                getch_exit("Failed to open the port: " + name)
+                getch_exit("Failed to open the port: " + port['device'])
             # Set baudrate
-            if self.port_handlers[i].setBaudRate(p['baudrate']):
+            if pth.setBaudRate(port['baudrate']):
                 print("Succeeded to change the baudrate: " + name)
             else:
                 getch_exit("Failed to change the baudrate: " + name)
+            # Append
+            self.port_handlers.append(pth)
 
         ############################################
         #             Packet Handlers
         ############################################
         # The 'PacketHandler' requires 'protocol version' for initialization.
-        # We can find 'packet_handler' with 'port_idx'
-        self.packet_handlers = []
-        packet_hd = {}
-        for i in range(num_port):
-            # !!! TODO : Is here range required?????
-            version = preset[i]['protocol_version']
-            if version not in packet_hd:
-                packet_hd[version] = dxlsdk.PacketHandler(version)
-            self.packet_handlers.append(packet_hd[version])
+        # KEY: 'protocol_version', VALUE: 'packet_handler'
+
+        # Duplicate cleaning
+        protocol_set = set([port['protocol_version'] for port in preset])
+        self.packet_handlers = {
+            version: dxlsdk.PacketHandler(version)
+            for version in protocol_set
+        }
 
         ############################################
         #                 Motor
         ############################################
-        self.motors = {}
-        for port_idx, ps in enumerate(preset):
-            for m in ps['motors']:
-                # Port number: int
-                motor = copy.deepcopy(m)
-                motor.update({'port': port_idx})
+        # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
 
-                # make key of motors dict.
+        # Motor List
+        for motor in (port['motors'] for port in preset):
+            # ID Validation
+            try:
+                motor['id']
+
+            except KeyError as e:
+                getch_exit("[FATAL] motor_ID was not defined.")
+            # Alias Validation
+            try:
+                motor['alias']
+            except KeyError as e:
+                pass
+            else:
+                pass
+
+
+        # ID Validation
+        for motorList
+        idList = []
+        for port in preset:
+            for motor in port['motors']:
+                if 
+                if motor['id'] not in idList:
+                    idList.append(motor['id'])
+                else:
+                    getch_exit("[Error] Duplicate Motor Alias Exists")
+        
+        # Alias
+        self.motors = {}
+
+        for portIndex, port in enumerate(preset):
+            for m in port['motors']:
+                motor = copy.deepcopy(m)
+                motor.update({'port': portIndex})
+                # {
+                #     "id": 1,
+                #     "alias": "joint_L1",
+                #     "model": "XM430-W210",
+                #     "port": portIndex
+                # }
+
+
 
                 # Empty alias
                 if not motor['alias']:
@@ -124,7 +165,7 @@ class DxlHelper:
                     self.motors[key] = motor
 
         # Load control tables
-        ctable_path = "../config/control_table/"
+        ctable_path = "../config/"
         self.ctables = {}
         for motoer_key, motor in self.motors:
             model = self.motor['model']
@@ -140,13 +181,11 @@ class DxlHelper:
             You have {} motor(s).".format(len(self.motors_id)))
 
     def __del__(self):
-        # Close ports
         for port in self.port_handlers:
-            # if port.isOpen():
-            #     port.closePort()
             port.closePort()
 
-    def _is_success(self, packet_handler, dxl_result, dxl_error):
+    @staticmethod
+    def _is_success(packet_handler, dxl_result, dxl_error):
         if dxl_result != dxlsdk.COMM_SUCCESS:
             print(packet_handler.getTxRxResult(dxl_result))
             return False
@@ -155,32 +194,29 @@ class DxlHelper:
             return False
         return True
 
-    def _find_motor(self, alias_or_id):
-        return self.motors[alias_or_id]
-
     def _find_four(self, alias_or_id):
         # TODO : We don't need to find four, everytime.
         #        Change to only once.
-        motor = self._find_motor(alias_or_id)
-        addr = self.catbles[mtr['model']]
+        motor = self.motors[alias_or_id]
+        addr = self.ctables[mtr['model']]
         porthd = self.port_handlers[mtr['port']]
         packethd = self.packet_handlers[mtr['port']]
         return motor['id'], addr, porthd, packethd
 
     def set_torque(self, alias_or_id, enable):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
+        motorID, addr, porthd, packethd = self._find_four(alias_or_id)
         dxl_result, dxl_error = packethd.write1ByteTxRx(
-            porthd, mid, addr['ram']['torque enable'], 1 if enable else 0)
+            porthd, motorID, addr['ram']['torque enable'], 1 if enable else 0)
         return self._is_success(packethd, dxl_result, dxl_error)
 
     def set_goal_position(self, alias_or_id, dxl_unit):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
+        motorID, addr, porthd, packethd = self._find_four(alias_or_id)
         dxl_result, dxl_error = packethd.write4ByteTxRx(
-            porthd, mid, addr['ram']['goal position'], dxl_unit)
+            porthd, motorID, addr['ram']['goal position'], dxl_unit)
         return self._is_success(packethd, dxl_result, dxl_error)
 
     def get_present_position(self, alias_or_id):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
+        motorID, addr, porthd, packethd = self._find_four(alias_or_id)
         position, dxl_result, dxl_error = packethd.read4ByteTxRx(
-            porthd, mid, addr['ram']['present position'])
+            porthd, motorID, addr['ram']['present position'])
         return position, self._is_success(packethd, dxl_result, dxl_error)
