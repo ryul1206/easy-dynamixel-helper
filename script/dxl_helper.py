@@ -107,16 +107,27 @@ class DxlHelper:
         # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
 
         # Motor List
+        idset = set()
+        alset = set()
         for motor in (port['motors'] for port in preset):
             # ID Validation
             try:
-                motor['id']
-
+                if not isinstance(motor['id'], int):
+                    getch_exit("[FATAL] Motor_ID must be type Int.")
+                elif motor['id'] in idset:
+                    getch_exit("[FATAL] Duplicate Motor_ID exists.")
+                else:
+                    idset.add(motor['id'])
             except KeyError as e:
-                getch_exit("[FATAL] motor_ID was not defined.")
+                getch_exit("[FATAL] Motor_ID was not defined.")
             # Alias Validation
             try:
-                motor['alias']
+                if not isinstance(motor['alias'], str):
+                    getch_exit("[ERROR] Alias must be type Str.")
+                elif motor['alias'] in alset:
+                    getch_exit("[ERROR] Duplicate Alias exists.")
+                else:
+                    alset.add(motor['alias'])
             except KeyError as e:
                 pass
             else:
