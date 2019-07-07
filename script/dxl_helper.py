@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# SDK Manual
+# http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_porthandler/#python
+
+from getch import getch_exit, getch_ask
 import dynamixel_sdk as dxlsdk
 import json
-from getch import getch_exit, getch_ask
-import random
-import string
-import copy
+from byteify import byteify
+from dxl_motor import DxlMotor
+# import random
+# import string
+
 
 # TODO: test history
 
@@ -23,41 +28,17 @@ import copy
 # TODO: Verify control table (key, addr, and etc.)
 
 
-def random_string(string_length=10):
-    """Generate a random string of fixed length."""
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for i in range(string_length))
-
-
-def byteify(unicode_json):
-    # Thanks to Mark Amery from StackOverflow.
-    # https://stackoverflow.com/questions/956867/how-to-get-string-objects-instead-of-unicode-from-json
-    if isinstance(unicode_json, dict):
-        return {byteify(key): byteify(value)
-                for key, value in unicode_json.iteritems()}
-    elif isinstance(unicode_json, list):
-        return [byteify(element) for element in unicode_json]
-    elif isinstance(unicode_json, unicode):
-        return unicode_json.encode('utf-8')
-    return unicode_json
+# def random_string(string_length=10):
+#     """Generate a random string of fixed length."""
+#     letters = string.ascii_lowercase
+#     return ''.join(random.choice(letters) for i in range(string_length))
 
 
 class DxlHelper:
-    class AliasedKey:
-        def __init__(self, key, alias):
-            self.key = key
-            self.alias = alias
-
-        def __eq__(self, other):
-            return other is self.key or other is self.alias
-
     def __init__(self, preset_file):
         # Load preset
-        preset = json.load(open(preset_file, 'r'), object_hook=byteify)
-
-        # The number of connections (ports)
-        # If you use 2 ports, ttyUSB0 and ttyUSB1, num_port == 2.
-        num_port = len(preset)
+        with open(preset_file, 'r') as f:
+            preset = json.load(f, object_hook=byteify)
 
         ############################################
         #              Port Handlers
@@ -68,116 +49,104 @@ class DxlHelper:
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        self.port_handlers = [dxlsdk.PortHandler(p['device']) for p in preset]
-
-        for i, p in enumerate(preset):
-            name = p['device']
+        self.port_handlers = []
+        for port in preset:
+            # Port handle
+            pth = dxlsdk.PortHandler(port['device'])
             # Open port
-            if self.port_handlers[i].openPort():
-                print("Succeeded to open the port: " + name)
+            if pth.openPort():
+                print("Succeeded to open the port: " + port['device'])
             else:
-                getch_exit("Failed to open the port: " + name)
+                getch_exit("Failed to open the port: " + port['device'])
             # Set baudrate
-            if self.port_handlers[i].setBaudRate(p['baudrate']):
+            if pth.setBaudRate(port['baudrate']):
                 print("Succeeded to change the baudrate: " + name)
             else:
                 getch_exit("Failed to change the baudrate: " + name)
+            # Append
+            self.port_handlers.append(pth)
 
         ############################################
         #             Packet Handlers
         ############################################
         # The 'PacketHandler' requires 'protocol version' for initialization.
-        # We can find 'packet_handler' with 'port_idx'
-        self.packet_handlers = []
-        packet_hd = {}
-        for i in range(num_port):
-            version = preset[i]['protocol_version']
-            if version not in packet_hd:
-                packet_hd[version] = dxlsdk.PacketHandler(version)
-            self.packet_handlers.append(packet_hd[version])
+        # KEY: 'protocol version', VALUE: 'packet_handler'
+
+        # Duplicate cleaning
+        protocol_set = set([port['protocol version'] for port in preset])
+        self.packet_handlers = {
+            version: dxlsdk.PacketHandler(version)
+            for version in protocol_set
+        }
 
         ############################################
         #                 Motor
         ############################################
-        self.motors = {}
-        for port_idx, ps in enumerate(preset):
-            for m in ps['motors']:
-                # Port number: int
-                motor = copy.deepcopy(m)
-                motor.update({'port': port_idx})
 
-                # make key of motors dict.
+        # Motor List
+        idset = set()
+        alset = set()
+        motorList = []
+        for portIndex, port in preset:
+            for motor in port['motors']:
+                # ID Validation
+                try:
+                    if not isinstance(motor['id'], int):
+                        getch_exit("[FATAL] Motor_ID must be type Int.")
+                    elif motor['id'] in idset:
+                        getch_exit("[FATAL] Duplicate Motor_ID exists.")
+                    else:
+                        idset.add(motor['id'])
+                except KeyError as e:
+                    getch_exit("[FATAL] Motor_ID was not defined.")
+                # Alias Validation
+                try:
+                    if not isinstance(motor['alias'], str):
+                        getch_exit("[ERROR] Alias must be type Str.")
+                    if motor['alias']:
+                        if motor['alias'] in alset:
+                            getch_exit("[ERROR] Duplicate Alias exists.")
+                        else:
+                            alset.add(motor['alias'])
+                    else:
+                        motor['alias'] = None
+                except KeyError as e:
+                    motor.update({'alias': None})
+                # Reconstruct motor list
+                motor.update({
+                    'port': portIndex,
+                    'protocol version': port['protocol version']
+                })
+                motorList.append(motor)
+                # {
+                #     "id": 1,
+                #     "alias": "joint_L1",
+                #     "model": "XM430-W210",
+                #     "port": portIndex
+                #     "protocol version": 2
+                # }
 
-                # Empty alias
-                if not motor['alias']:
-                    motor['alias'] = random_string()
-                key = self.AliasedKey(motor['id'], motor['alias'])
-
-                # Duplicate Alias rejection
-                if motor['alias'] in self.motors:
-                    getch_exit("[Error] Duplicate Motor Alias Exists")
-                # Duplicate ID rejection\
-                elif motor['id'] in self.motors_id:
-                    getch_exit("[Error] Duplicate Motor ID Exists")
-                else:
-                    self.motors[key] = motor
-
-        # Load control tables
-        ctable_path = "../config/control_table/"
-        self.ctables = {}
-        for motoer_key, motor in self.motors:
-            model = self.motor['model']
-            # Check that already loaded
-            if model in self.ctables:
-                continue
-            # Check that the file exists
-            ctable_file = ctable_path + model + ".json"
-            ctable = json.load(open(ctable_file, 'r'), object_hook=byteify)
-            self.ctables[model] = ctable
+        # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
+        self.__motors = {}
+        for motor in motorList:
+            motorInstance = DxlMotor(
+                motor['id'],
+                motor['alias'],
+                motor['model'],
+                self.port_handlers[motor['port']],
+                self.packet_handlers[motor['protocol version']]
+            )
+            self.__motors[motor['id']] = motorInstance
+            if motor['alias']:
+                self.__motors[motor['alias']] = motorInstance
 
         print("Succeeded to read the motor config! \
-            You have {} motor(s).".format(len(self.motors_id)))
+            You have {} motor(s).".format(len(motorList)))
 
     def __del__(self):
-        # Close ports
         for port in self.port_handlers:
-            # if port.isOpen():
-            #     port.closePort()
             port.closePort()
 
-    def _is_success(self, packet_handler, dxl_result, dxl_error):
-        if dxl_result != dxlsdk.COMM_SUCCESS:
-            print(packet_handler.getTxRxResult(dxl_result))
-            return False
-        elif dxl_error != 0:
-            print(packet_handler.getRxPacketError(dxl_error))
-            return False
-        return True
-
-    def _find_motor(self, alias_or_id):
-        return self.motors[alias_or_id]
-
-    def _find_four(self, alias_or_id):
-        motor = self._find_motor(alias_or_id)
-        addr = self.catbles[mtr['model']]
-        porthd = self.port_handlers[mtr['port']]
-        packethd = self.packet_handlers[mtr['port']]
-        return motor['id'], addr, porthd, packethd
-
-    def set_torque(self, alias_or_id, enable):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
-        dxl_result, dxl_error = packethd.write1ByteTxRx(
-            porthd, mid, addr['ram']['torque enable'], 1 if enable else 0)
-        return self._is_success(packethd, dxl_result, dxl_error)
-
-    def set_goal_position(self, alias_or_id, dxl_unit):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
-        dxl_result, dxl_error = packethd.write4ByteTxRx(
-            porthd, mid, addr['ram']['goal position'], dxl_unit)
-        return self._is_success(packethd, dxl_result, dxl_error)
-
-    def get_present_position(self, alias_or_id):
-        mid, addr, porthd, packethd = self._find_four(alias_or_id)
-        position, dxl_result, dxl_error = packethd.read4ByteTxRx(
-            porthd, mid, addr['ram']['present position'])
-        return position, self._is_success(packethd, dxl_result, dxl_error)
+    # TODO: property decorator
+    def get_motor(self, _id):
+        return self.__motors[_id]

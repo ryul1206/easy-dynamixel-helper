@@ -6,13 +6,12 @@
     "motors": [
       {
         "alias": "joint_L1",
-        "model": "XM430-W210",
-        "id": 1
+        "model": "XM430-W210"
       },
       {
+        "id": 2,
         "alias": "joint_L2",
-        "model": "XM430-W210",
-        "id": 2
+        "model": "XM430-W210"
       }
     ]
   },
@@ -22,14 +21,14 @@
     "protocol version": 2.0,
     "motors": [
       {
+        "id": 3,
         "alias": "joint_R1",
-        "model": "XM430-W210",
-        "id": 3
+        "model": "XM430-W210"
       },
       {
+        "id": 4,
         "alias": "joint_R2",
-        "model": "XM430-W210",
-        "id": 4
+        "model": "XM430-W210"
       }
     ]
   }
