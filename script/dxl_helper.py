@@ -56,11 +56,12 @@ class DxlHelper:
 
     def __init__(self, preset_file):
         # Load preset
-        preset = json.load(open(preset_file, 'r'), object_hook=byteify)
+        with open(preset_file, 'r') as f:
+            preset = json.load(f, object_hook=byteify)
 
         # The number of connections (ports)
         # If you use 2 ports, ttyUSB0 and ttyUSB1, num_port == 2.
-        num_port = len(preset)
+        # num_port = len(preset)
 
         ############################################
         #              Port Handlers
@@ -104,7 +105,6 @@ class DxlHelper:
         ############################################
         #                 Motor
         ############################################
-        # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
 
         # Motor List
         idset = set()
@@ -132,20 +132,8 @@ class DxlHelper:
                 pass
             else:
                 pass
-
-
-        # ID Validation
-        for motorList
-        idList = []
-        for port in preset:
-            for motor in port['motors']:
-                if 
-                if motor['id'] not in idList:
-                    idList.append(motor['id'])
-                else:
-                    getch_exit("[Error] Duplicate Motor Alias Exists")
         
-        # Alias
+        # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
         self.motors = {}
 
         for portIndex, port in enumerate(preset):
@@ -185,7 +173,8 @@ class DxlHelper:
                 continue
             # Check that the file exists
             ctable_file = ctable_path + model + ".json"
-            ctable = json.load(open(ctable_file, 'r'), object_hook=byteify)
+            with open(ctable_file, 'r') as f:
+                ctable = json.load(f, object_hook=byteify)
             self.ctables[model] = ctable
 
         print("Succeeded to read the motor config! \
