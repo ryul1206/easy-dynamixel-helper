@@ -17,7 +17,9 @@ class DxlMotor:
         control_table_path = "../config/"
         control_table_file = control_table_path + model + ".json"
         with open(control_table_file, 'r') as f:
-            self.addr = json.load(f, object_hook=byteify)
+            control_table = json.load(f, object_hook=byteify)
+        self.EEPROM = control_table['eeprom']
+        self.RAM = control_table['ram']
 
     def __eq__(self, other):
         return self.id == other.id
@@ -33,17 +35,17 @@ class DxlMotor:
 
     def set_torque(self, alias_or_id, enable):
         dxl_result, dxl_error = self.packet_handler.write1ByteTxRx(
-            self.port_handler, self.id, self.addr['ram']['torque enable'],
+            self.port_handler, self.id, self.RAM['torque enable'],
             1 if enable else 0)
         return self._is_success(dxl_result, dxl_error)
 
     def set_goal_position(self, alias_or_id, dxl_unit):
         dxl_result, dxl_error = self.packet_handler.write4ByteTxRx(
-            self.port_handler, self.id, self.addr['ram']['goal position'],
+            self.port_handler, self.id, self.RAM['goal position'],
             dxl_unit)
         return self._is_success(dxl_result, dxl_error)
 
     def get_present_position(self, alias_or_id):
         position, dxl_result, dxl_error = self.packet_handler.read4ByteTxRx(
-            self.port_handler, self.id, self.addr['ram']['present position'])
+            self.port_handler, self.id, self.RAM['present position'])
         return position, self._is_success(dxl_result, dxl_error)
