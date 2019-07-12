@@ -6,6 +6,34 @@ import json
 from byteify import byteify
 
 
+class DxlAbsMotor(object):
+    def __init__(self, id, alias, model, comm_dev, port_handler, packet_handler):
+        self.id = id        # expects integer
+        self.alias = alias    # expexts string
+        self.model = model   # expects string
+        self.port_handler = port_handler        # expexts port_handler instance
+        self.packet_handler = packet_handler    # expects packet_handler instance
+        self.comm_dev = comm_dev  # expects string
+
+    def __str__(self):
+        return str(self.alias) + "\t\tdevice: " + str(self.comm_dev) + ", \t\tid: "+str(self.id)
+
+    def _is_success(self, dxl_result, dxl_error):
+        if dxl_result != dxlsdk.COMM_SUCCESS:
+            print(self.packet_handler.getTxRxResult(dxl_result))
+            return False
+        elif dxl_error != 0:
+            print(self.packet_handler.getRxPacketError(dxl_error))
+            return False
+        return True
+
+    def torque_onoff(self, enable):
+        return False
+
+    def __eq__(self, other):
+        return self.id == other.id
+
+
 class DxlMotor:
     def __init__(self, _id, alias, model, port_handler, packet_handler):
         self.id = _id
