@@ -34,7 +34,7 @@ from dxl_motor import DxlMotor
 #     return ''.join(random.choice(letters) for i in range(string_length))
 
 
-class DxlHelper:
+class DxlHelper(object):
     def __init__(self, preset_file):
         # Load preset
         with open(preset_file, 'r') as f:
@@ -92,9 +92,9 @@ class DxlHelper:
                 # ID Validation
                 try:
                     if not isinstance(motor['id'], int):
-                        getch_exit("[FATAL] Motor_ID must be type Int.")
+                        getch_exit("[FATAL] Motor_ID must be type Int. Motor ID: {}".format(motor['id']))
                     elif motor['id'] in idset:
-                        getch_exit("[FATAL] Duplicate Motor_ID exists.")
+                        getch_exit("[FATAL] Duplicate Motor_ID exists. Motor ID: {}".format(motor['id']))
                     else:
                         idset.add(motor['id'])
                 except KeyError as e:
@@ -102,10 +102,10 @@ class DxlHelper:
                 # Alias Validation
                 try:
                     if not isinstance(motor['alias'], str):
-                        getch_exit("[ERROR] Alias must be type Str.")
+                        getch_exit("[ERROR] Alias must be type Str. Alias: {}".format(motor['alias']))
                     if motor['alias']:
                         if motor['alias'] in alset:
-                            getch_exit("[ERROR] Duplicate Alias exists.")
+                            getch_exit("[ERROR] Duplicate Alias exists. Alias: {}".format(motor['alias']))
                         else:
                             alset.add(motor['alias'])
                     else:

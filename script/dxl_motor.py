@@ -6,7 +6,7 @@ import json
 from byteify import byteify
 
 
-class DxlMotor:
+class DxlMotor(object):
     def __init__(self, _id, alias, model, port_handler, packet_handler):
         self.id = _id
         self.port_handler = port_handler
