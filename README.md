@@ -18,16 +18,24 @@ TODO: update figure (direct writing on the control table)
 
 <!-- Your code ===> DXL Helper ===> Your motor(control table) -->
 
-1. [Getting Started](#getting-started)
-    1. [Prerequisites](#prerequisites)
-    2. [Installation](#installation)
-2. [Simple Example](#simple-example)
-3. [Tutorial](#tutorial)
-4. [Maintainers](#maintainers)
-5. [Release Notes](#release-notes)
-6. [Licenses](#licenses)
+1. [특징](#특징)
+2. [Getting Started](#Getting-Started)
+    1. [Prerequisites](#Prerequisites)
+    2. [Installation](#Installation)
+3. [Simple Example](#Simple-Example)
+4. [Tutorial](#Tutorial)
+5. [Maintainers](#Maintainers)
+6. [Release Notes](#Release-Notes)
+7. [Licenses](#Licenses)
 
 <!-- https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 -->
+
+## 특징
+
+- json 으로 연결 설정
+- python 2, 3 지원
+- 동일한 ID구성을 갖는 여러 대의 로봇 연결 지원
+- 여러 개의 포트를 사용하는 로봇 지원
 
 ## Getting Started
 

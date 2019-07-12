@@ -55,14 +55,14 @@ class DxlHelper:
             pth = dxlsdk.PortHandler(port['device'])
             # Open port
             if pth.openPort():
-                print("Succeeded to open the port: " + port['device'])
+                print("Succeeded to open the port: \t\t" + port['device'])
             else:
-                getch_exit("Failed to open the port: " + port['device'])
+                getch_exit("Failed to open the port: \t\t" + port['device'])
             # Set baudrate
             if pth.setBaudRate(port['baudrate']):
-                print("Succeeded to change the baudrate: " + name)
+                print("Succeeded to change the baudrate: \t" + port['device'])
             else:
-                getch_exit("Failed to change the baudrate: " + name)
+                getch_exit("Failed to change the baudrate: \t" + port['device'])
             # Append
             self.port_handlers.append(pth)
 
@@ -87,7 +87,7 @@ class DxlHelper:
         idset = set()
         alset = set()
         motorList = []
-        for portIndex, port in preset:
+        for portIndex, port in enumerate(preset):
             for motor in port['motors']:
                 # ID Validation
                 try:
@@ -140,8 +140,8 @@ class DxlHelper:
             if motor['alias']:
                 self.__motors[motor['alias']] = motorInstance
 
-        print("Succeeded to read the motor config! \
-            You have {} motor(s).".format(len(motorList)))
+        print("All the motor settings are complete!")
+        print("You have {} motor(s).".format(len(motorList)))
 
     def __del__(self):
         for port in self.port_handlers:

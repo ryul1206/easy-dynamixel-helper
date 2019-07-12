@@ -33,19 +33,19 @@ class DxlMotor:
             return False
         return True
 
-    def set_torque(self, alias_or_id, enable):
+    def set_torque(self, enable):
         dxl_result, dxl_error = self.packet_handler.write1ByteTxRx(
             self.port_handler, self.id, self.RAM['torque enable'],
             1 if enable else 0)
         return self._is_success(dxl_result, dxl_error)
 
-    def set_goal_position(self, alias_or_id, dxl_unit):
+    def set_goal_position(self, dxl_unit):
         dxl_result, dxl_error = self.packet_handler.write4ByteTxRx(
             self.port_handler, self.id, self.RAM['goal position'],
             dxl_unit)
         return self._is_success(dxl_result, dxl_error)
 
-    def get_present_position(self, alias_or_id):
+    def get_present_position(self):
         position, dxl_result, dxl_error = self.packet_handler.read4ByteTxRx(
             self.port_handler, self.id, self.RAM['present position'])
         return position, self._is_success(dxl_result, dxl_error)

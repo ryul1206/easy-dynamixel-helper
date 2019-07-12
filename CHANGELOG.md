@@ -13,6 +13,7 @@ REMOVE : feature removed
 
 ### Future
 
+- 각 포트에 어떤 아이디 꼽혔는지 몰라도 상관없게.
 - Indirect address section
 - Check what happens when duplicate dxl_helper (about Singleton)
 
