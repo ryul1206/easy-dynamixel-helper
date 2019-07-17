@@ -1,1 +1,0 @@
-name = "dynamixel_helper"

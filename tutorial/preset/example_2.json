@@ -5,12 +5,8 @@
     "protocol version": 2.0,
     "motors": [
       {
-        "alias": "joint_L1",
-        "model": "XM430-W210"
-      },
-      {
-        "id": 2,
-        "alias": "joint_L2",
+        "id": 0,
+        "alias": "joint_1",
         "model": "XM430-W210"
       }
     ]
@@ -21,13 +17,8 @@
     "protocol version": 2.0,
     "motors": [
       {
-        "id": 3,
-        "alias": "joint_R1",
-        "model": "XM430-W210"
-      },
-      {
-        "id": 4,
-        "alias": "joint_R2",
+        "id": 1,
+        "alias": "joint_2",
         "model": "XM430-W210"
       }
     ]

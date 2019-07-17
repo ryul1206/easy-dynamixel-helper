@@ -25,8 +25,9 @@ TODO: update figure (direct writing on the control table)
 3. [Simple Example](#Simple-Example)
 4. [Tutorial](#Tutorial)
 5. [Maintainers](#Maintainers)
-6. [Release Notes](#Release-Notes)
-7. [Licenses](#Licenses)
+6. [Contributions](#Contributions)
+7. [Release Notes](#Release-Notes)
+8. [Licenses](#Licenses)
 
 <!-- https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 -->
 
@@ -83,6 +84,20 @@ TODO: detail tutorial / use new markdown.
 
 - **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
 - **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
+
+## Contributions
+
+vscode `setting.json`
+
+```json
+"editor.tabSize": 4,
+"[json]": {
+    "editor.tabSize": 2
+},
+"python.linting.pylintEnabled": false,
+"python.linting.pep8Enabled": true,
+"python.linting.enabled": true
+```
 
 ## Release Notes
 

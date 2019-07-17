@@ -1,9 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
+
 import dynamixel_sdk as dxlsdk
 import json
-from byteify import byteify
+from .byteify import byteify
+from .getch import getch_exit, getch_ask
 
 
 class DxlMotor(object):
@@ -13,11 +16,14 @@ class DxlMotor(object):
         self.packet_handler = packet_handler
 
         # Load control tables
-        # TODO customizable path
-        control_table_path = "../config/"
+        pkg_directory = os.path.dirname(os.path.abspath(__file__))
+        control_table_path = pkg_directory + "/config/"
         control_table_file = control_table_path + model + ".json"
-        with open(control_table_file, 'r') as f:
-            control_table = json.load(f, object_hook=byteify)
+        try:
+            with open(control_table_file, 'r') as f:
+                control_table = json.load(f, object_hook=byteify)
+        except FileNotFoundError as e:
+            getch_exit(e)
         self.EEPROM = control_table['eeprom']
         self.RAM = control_table['ram']
 
