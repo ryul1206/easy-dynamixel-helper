@@ -1,31 +1,39 @@
 # CHANGELOG
 
-https://packaging.python.org/tutorials/packaging-projects/
+1. [Tasks](#Tasks)
+    1. [Future](#Future)
+    2. [In progress](#In-progress)
+    3. [Done (Release candidates)](#Done-Release-candidates)
+2. [Release Notes](#Release-Notes)
+    1. [0.0.0 (2019.07.20)](#000-20190720)
 
-## Workflow
+## Tasks
 
 <!-- Tags
 NEW : added new feature
 FIX : bug fixed
 IMPROVE : feature improved
 REMOVE : feature removed
+OTHER
 -->
 
 ### Future
 
-모터랑 포트랑 preset 분리 
+- **NEW**: Handle the indirect address section
 
-- TODO: Comment python description for all functions [link](https://www.python.org/dev/peps/pep-0257/)
-- TODO: Test in both Python 2.x and Python 3.x
-- TODO: Verify actual motor driving
-- TODO: Wrapping more features of the SDK
-- TODO: Verify control table (key, addr, and etc.)
-- TODO: property decorator
-- DxlMotor: customizable path for control table
+<!--  -->
 
-- 각 포트에 어떤 아이디 꼽혔는지 몰라도 상관없게.
-- Indirect address section
-- Check what happens when duplicate dxl_helper (about Singleton)
+- **IMPROVE**: Separate motor and port information from preset
+    - (eng) The current form needs to know which port the motor is connected. This is very cumbersome.
+    - (kor) 현재의 양식은 모터가 어느 포트에 소속되어 있는지 알아야 합니다. 이것은 매우 번거롭기 때문에 `preset`에서 분리하여 합니다.
+- **IMPROVE**: Wrapping more features from the Dynamixel SDK
+- **IMPROVE**: Property decorator
+- **IMPROVE**: `DxlMotor`. Customizable path for control table
+- **IMPROVE**: Singleton with arguments. Duplicate `dxl_helper` issue
+
+<!--  -->
+
+- **OTHER**: [[PEP 257](https://www.python.org/dev/peps/pep-0257/)] Comment for all functions
 
 ### In progress
 
@@ -33,7 +41,7 @@ REMOVE : feature removed
 
 ### Done (Release candidates)
 
-- **IMPROVED** Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
+---
 
 ## Release Notes
 
@@ -42,19 +50,26 @@ NEW : added new feature
 FIXED : bug fixed
 IMPROVED : feature improved
 REMOVED : feature removed
+OTHER
 -->
 
-### 0.1.0 (2019.00.00)
+### 0.0.0 (2019.07.20)
 
-- **NEW** Some freatures
+1st Release! Yeah!
+
+- **NEW**: 2 Basic features (torque on/off and position command)
+- **NEW**: Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
+- **NEW**: Basic tutorials
 
 <!--  -->
+
+- **OTHER**: Test basic features with actual motor(XM430-W210) in Python 2.x and 3.x
 
 ---
 
 <!--  -->
 
-<!-- EXAMPLE 
+<!-- EXAMPLE
 
 - **New** Prefer unused links for reference link label completions ([#414](https://github.com/yzhang-gh/vscode-markdown/issues/414)). Thanks, [Chris (@alshain)](https://github.com/alshain).
 - **New**: Option `markdown.extension.print.onFileSave` ([#417](https://github.com/yzhang-gh/vscode-markdown/issues/417)). Thanks, [Li Yiming (@upupming)](https://github.com/upupming).

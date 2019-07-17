@@ -8,11 +8,7 @@ TODO: a badge of pypi release version (/pypi/v/:packageName.svg)
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-Supported language: Python
-
-**[Warning]** Currently, I have not tested this helper. (The test will be on **July**)
-
-TODO: korean readme
+Document language: [English](README.md), [한국어](README(kor).md)
 
 TODO: update figure (direct writing on the control table)
 
@@ -70,15 +66,23 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 
 ### Installation
 
-TODO: pip install will be update
+```bash
+pip install dynamixel_helper
+```
 
 ## Simple Example
 
-TODO: one motor
+```python
+from dynamixel_helper import DxlHelper
+
+helper = DxlHelper("preset/{your_robot}.json")
+motor = helper.get_motor(0)  # id: 0
+motor.set_torque(True)
+```
 
 ## Tutorial
 
-TODO: detail tutorial / use new markdown.
+[Click here](/tutorial/tutorial_toc.md)
 
 ## Maintainers
 
@@ -87,21 +91,29 @@ TODO: detail tutorial / use new markdown.
 
 ## Contributions
 
-vscode `setting.json`
+code of ..?
+
+<!-- vscode `setting.json`
 
 ```json
 "editor.tabSize": 4,
 "[json]": {
     "editor.tabSize": 2
 },
+"markdownlint.config": {
+    "default": true,
+    // "MD003": { "style": "atx_closed" },
+    "MD007": { "indent": 4 },
+    "no-hard-tabs": false
+},
 "python.linting.pylintEnabled": false,
 "python.linting.pep8Enabled": true,
 "python.linting.enabled": true
-```
+``` -->
 
 ## Release Notes
 
-[here](/CHANGELOG)
+[Click here](/CHANGELOG)
 
 ## Licenses
 
