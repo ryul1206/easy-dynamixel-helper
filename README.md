@@ -1,14 +1,16 @@
 # Easy Dynamixel Helper
 
-![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/master)
-
-TODO: a badge of pypi release version (/pypi/v/:packageName.svg)
+![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-Document language: [English](README.md), [한국어](README(kor).md)
+[English](README.md), [한국어](README(kor).md)
+
+
+
 
 TODO: update figure (direct writing on the control table)
 
