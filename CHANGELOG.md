@@ -20,6 +20,7 @@ OTHER
 ### Future
 
 - **NEW**: Handle the indirect address section
+- **NEW**: Supports multiple robot connections with the same ID configuration
 
 <!--  -->
 

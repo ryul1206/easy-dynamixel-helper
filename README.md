@@ -5,36 +5,27 @@
 ![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 
-This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
 [English](README.md), [한국어](README(kor).md)
 
+This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-
-
-TODO: update figure (direct writing on the control table)
-
+<!-- TODO: update figure (direct writing on the control table) -->
 <!-- Your code ===> DXL Helper ===> Your motor(control table) -->
 
-1. [특징](#특징)
-2. [Getting Started](#Getting-Started)
+1. [Getting Started](#Getting-Started)
     1. [Prerequisites](#Prerequisites)
     2. [Installation](#Installation)
-3. [Simple Example](#Simple-Example)
-4. [Tutorial](#Tutorial)
-5. [Maintainers](#Maintainers)
-6. [Contributions](#Contributions)
-7. [Release Notes](#Release-Notes)
+2. [Simple Example](#Simple-Example)
+3. [Features](#Features)
+4. [Tutorials](#Tutorials)
+5. [Release Notes](#Release-Notes)
+6. [Contributing](#Contributing)
+7. [Maintainers](#Maintainers)
 8. [Licenses](#Licenses)
 
-<!-- https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 -->
-
-## 특징
-
-- json 으로 연결 설정
-- python 2, 3 지원
-- 동일한 ID구성을 갖는 여러 대의 로봇 연결 지원
-- 여러 개의 포트를 사용하는 로봇 지원
+<!-- README-Template.md -->
+<!-- https://gist.github.com/PurpleBooth -->
 
 ## Getting Started
 
@@ -42,7 +33,7 @@ TODO: update figure (direct writing on the control table)
 
 You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
 
-<details><summary>CLICK ME (Dynamixel SDK Installation)</summary>
+<details><summary>Click here: Dynamixel SDK Installation</summary>
 <p>
 
 1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
@@ -69,10 +60,12 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 ### Installation
 
 ```bash
-pip install dynamixel_helper
+pip install dynamixel_helper --user
 ```
 
 ## Simple Example
+
+The code below turns the motor's torque on.
 
 ```python
 from dynamixel_helper import DxlHelper
@@ -82,16 +75,21 @@ motor = helper.get_motor(0)  # id: 0
 motor.set_torque(True)
 ```
 
-## Tutorial
+## Features
 
-[Click here](/tutorial/tutorial_toc.md)
+- Motor configurations in JSON format
+- Support for Python 2.x and 3.x
+- Easy multiple USB connections
 
-## Maintainers
+## Tutorials
 
-- **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
-- **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
+[Go to tutorials](/tutorial/TUTORIAL.md)
 
-## Contributions
+## Release Notes
+
+[Click here](/CHANGELOG)
+
+## Contributing
 
 code of ..?
 
@@ -113,9 +111,10 @@ code of ..?
 "python.linting.enabled": true
 ``` -->
 
-## Release Notes
+## Maintainers
 
-[Click here](/CHANGELOG)
+- **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
+- **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
 
 ## Licenses
 
