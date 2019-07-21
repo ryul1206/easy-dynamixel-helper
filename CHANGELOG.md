@@ -5,7 +5,7 @@
     2. [In progress](#In-progress)
     3. [Done (Release candidates)](#Done-Release-candidates)
 2. [Release Notes](#Release-Notes)
-    1. [0.0.0 (2019.07.20)](#000-20190720)
+    1. [0.0.0 (2019.07.22)](#000-20190722)
 
 ## Tasks
 
@@ -34,7 +34,7 @@ OTHER
 
 <!--  -->
 
-- **OTHER**: [[PEP 257](https://www.python.org/dev/peps/pep-0257/)] Comment for all functions
+- **OTHER**: ([PEP 257](https://www.python.org/dev/peps/pep-0257/)) Comment for all functions
 
 ### In progress
 
@@ -54,13 +54,14 @@ REMOVED : feature removed
 OTHER
 -->
 
-### 0.0.0 (2019.07.20)
+### 0.0.0 (2019.07.22)
 
 1st Release! Yeah!
 
 - **NEW**: 2 Basic features (torque on/off and position command)
 - **NEW**: Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
 - **NEW**: Basic tutorials
+- **NEW**: Multilangual README and tutorials (powered by [Multilingual Markdown Generator](https://github.com/ryul1206/multilingual-markdown)!!)
 
 <!--  -->
 
@@ -68,22 +69,9 @@ OTHER
 
 ---
 
-<!--  -->
-
 <!-- EXAMPLE
 
 - **New** Prefer unused links for reference link label completions ([#414](https://github.com/yzhang-gh/vscode-markdown/issues/414)). Thanks, [Chris (@alshain)](https://github.com/alshain).
-- **New**: Option `markdown.extension.print.onFileSave` ([#417](https://github.com/yzhang-gh/vscode-markdown/issues/417)). Thanks, [Li Yiming (@upupming)](https://github.com/upupming).
-- **New**: Autocompletion for heading links ([#419](https://github.com/yzhang-gh/vscode-markdown/issues/419)). Thanks again, [Chris (@alshain)](https://github.com/alshain).
-
--->
-<!--  -->
-<!--
-
-- **Fix**: Syntax decorations ([#390](https://github.com/yzhang-gh/vscode-markdown/issues/390)).
-- **Fix**: Table formatter ([#408](https://github.com/yzhang-gh/vscode-markdown/issues/408)).
-- **Fix**: Delete space rather than outdent list when there are two or more spaces on <kbd>Backspace</kbd> ([#410](https://github.com/yzhang-gh/vscode-markdown/issues/410)).
-- **Fix**: Image paths in exported HTML ([#415](https://github.com/yzhang-gh/vscode-markdown/issues/415), [#429](https://github.com/yzhang-gh/vscode-markdown/issues/429)).
 - **Fix**: TOC and fenced code blocks ([#425](https://github.com/yzhang-gh/vscode-markdown/issues/425)).
 - **Other**: Sort KaTeX functions (lowercase first) ([#413](https://github.com/yzhang-gh/vscode-markdown/issues/413)).
 - **Other**: Update KaTeX supported functions ([#416](https://github.com/yzhang-gh/vscode-markdown/issues/416)). Thanks again, [Li Yiming (@upupming)](https://github.com/upupming).

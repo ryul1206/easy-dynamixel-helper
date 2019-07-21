@@ -5,29 +5,25 @@
 ![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 
-
-[English](README.md), [한국어](README(kor).md)
+🌏 [English](README.md), [한국어](README.kr.md)
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-<!-- TODO: update figure (direct writing on the control table) -->
-<!-- Your code ===> DXL Helper ===> Your motor(control table) -->
+**Table of Contents**
 
-1. [Getting Started](#Getting-Started)
+1. [ Getting Started](#-Getting-Started)
     1. [Prerequisites](#Prerequisites)
-    2. [Installation](#Installation)
-2. [Simple Example](#Simple-Example)
-3. [Features](#Features)
-4. [Tutorials](#Tutorials)
-5. [Release Notes](#Release-Notes)
-6. [Contributing](#Contributing)
-7. [Maintainers](#Maintainers)
-8. [Licenses](#Licenses)
+    1. [Installation](#Installation)
+1. [ Simple Example](#-Simple-Example)
+1. [ Features](#-Features)
+1. [ Tutorials](#-Tutorials)
+1. [ Release Notes](#-Release-Notes)
+1. [ Contributing](#-Contributing)
+    1. [Style Guide](#Style-Guide)
+1. [ Maintainers](#-Maintainers)
+1. [ Licenses](#-Licenses)
 
-<!-- README-Template.md -->
-<!-- https://gist.github.com/PurpleBooth -->
-
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -41,7 +37,6 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
     ```bash
     git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
     ```
-
 2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
 
     ```bash
@@ -59,13 +54,15 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 
 ### Installation
 
+Simply type `pip` command below to install this helper.
+
 ```bash
 pip install dynamixel_helper --user
 ```
 
-## Simple Example
+## 🐣 Simple Example
 
-The code below turns the motor's torque on.
+The following code is an example of turning on the motor torque.
 
 ```python
 from dynamixel_helper import DxlHelper
@@ -75,49 +72,51 @@ motor = helper.get_motor(0)  # id: 0
 motor.set_torque(True)
 ```
 
-## Features
+## 💎 Features
 
 - Motor configurations in JSON format
-- Support for Python 2.x and 3.x
+- Support for Python 3 and 2
 - Easy multiple USB connections
 
-## Tutorials
+## 🌱 Tutorials
 
-[Go to tutorials](/tutorial/TUTORIAL.md)
+[Go to tutorials](/tutorial/TUTORIAL.en.md)
 
-## Release Notes
+## 🚩 Release Notes
 
-[Click here](/CHANGELOG)
 
-## Contributing
+[Go to release notes](/CHANGELOG.md#Release-Notes)
 
-code of ..?
+## 💌 Contributing
 
-<!-- vscode `setting.json`
+- We will welcome whatever your contribution is!
+- If you are planning to send a new `Pull request`, please send them into the `develop` Branch.😍
+### Style Guide
 
-```json
-"editor.tabSize": 4,
-"[json]": {
-    "editor.tabSize": 2
-},
-"markdownlint.config": {
-    "default": true,
-    // "MD003": { "style": "atx_closed" },
-    "MD007": { "indent": 4 },
-    "no-hard-tabs": false
-},
-"python.linting.pylintEnabled": false,
-"python.linting.pep8Enabled": true,
-"python.linting.enabled": true
-``` -->
+> This style guide is only a recommendation, never more important than your interest and contributions.
 
-## Maintainers
+- Our default Python style is [PEP 8](https://www.python.org/dev/peps/pep-0008/).
+- If you use [VSCode](https://code.visualstudio.com/) as your code editor, please refer to the following settings. This setting is a part of our `setting.json`.
+
+    ```json
+    {
+        "editor.tabSize": 4,
+        "[json]": {
+            "editor.tabSize": 2
+        },
+        "python.linting.pylintEnabled": false,
+        "python.linting.pep8Enabled": true,
+        "python.linting.enabled": true
+    }
+    ```
+
+## 🔧 Maintainers
 
 - **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
 - **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
 
-## Licenses
+## 📜 Licenses
 
-The contents of this repository are subject to the [MIT license](/LICENSE) by default, except as noted below.
+The contents of this repository are subject to the [MIT License](/LICENSE) by default, except as noted below.
 
 - Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)
