@@ -4,41 +4,21 @@
 # SDK Manual
 # http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_porthandler/#python
 
-from getch import getch_exit, getch_ask
 import dynamixel_sdk as dxlsdk
 import json
-from byteify import byteify
-from dxl_motor import DxlMotor
-# import random
-# import string
-
-
-# TODO: test history
-
-# TODO: Is byteify also return some Int?
-
-# TODO: Comment python description for all functions [link](https://www.python.org/dev/peps/pep-0257/)
-
-# TODO: Test in both Python 2.x and Python 3.x
-
-# TODO: Verify actual motor driving
-
-# TODO: Wrapping more features of the SDK
-
-# TODO: Verify control table (key, addr, and etc.)
-
-
-# def random_string(string_length=10):
-#     """Generate a random string of fixed length."""
-#     letters = string.ascii_lowercase
-#     return ''.join(random.choice(letters) for i in range(string_length))
+from .dxl_motor import DxlMotor
+from .byteify import byteify
+from .getch import getch_exit, getch_ask
 
 
 class DxlHelper(object):
     def __init__(self, preset_file):
         # Load preset
-        with open(preset_file, 'r') as f:
-            preset = json.load(f, object_hook=byteify)
+        try:
+            with open(preset_file, 'r') as f:
+                preset = json.load(f, object_hook=byteify)
+        except FileNotFoundError as e:
+            getch_exit(e)
 
         ############################################
         #              Port Handlers
@@ -147,6 +127,5 @@ class DxlHelper(object):
         for port in self.port_handlers:
             port.closePort()
 
-    # TODO: property decorator
     def get_motor(self, _id):
         return self.__motors[_id]

@@ -1,49 +1,35 @@
 # Easy Dynamixel Helper
 
-![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/overview/master)
+![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
 
-TODO: a badge of pypi release version (/pypi/v/:packageName.svg)
+🌏 [English](README.md), [한국어](README.kr.md)
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
-Supported language: Python
+**Table of Contents**
 
-**[Warning]** Currently, I have not tested this helper. (The test will be on **July**)
+1. [🚀 Getting Started](#-getting-started)
+    1. [Prerequisites](#prerequisites)
+    2. [Installation](#installation)
+2. [🐣 Simple Example](#-simple-example)
+3. [💎 Features](#-features)
+4. [🌱 Tutorials](#-tutorials)
+5. [🚩 Release Notes](#-release-notes)
+6. [💌 Contributing](#-contributing)
+    1. [Style Guide](#style-guide)
+7. [🔧 Maintainers](#-maintainers)
+8. [📜 Licenses](#-licenses)
 
-TODO: korean readme
-
-TODO: update figure (direct writing on the control table)
-
-<!-- Your code ===> DXL Helper ===> Your motor(control table) -->
-
-1. [특징](#특징)
-2. [Getting Started](#Getting-Started)
-    1. [Prerequisites](#Prerequisites)
-    2. [Installation](#Installation)
-3. [Simple Example](#Simple-Example)
-4. [Tutorial](#Tutorial)
-5. [Maintainers](#Maintainers)
-6. [Release Notes](#Release-Notes)
-7. [Licenses](#Licenses)
-
-<!-- https://gist.github.com/PurpleBooth/109311bb0361f32d87a2 -->
-
-## 특징
-
-- json 으로 연결 설정
-- python 2, 3 지원
-- 동일한 ID구성을 갖는 여러 대의 로봇 연결 지원
-- 여러 개의 포트를 사용하는 로봇 지원
-
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
 
-<details><summary>CLICK ME (Dynamixel SDK Installation)</summary>
+<details><summary>Click here: Dynamixel SDK Installation</summary>
 <p>
 
 1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
@@ -51,7 +37,6 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
     ```bash
     git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
     ```
-
 2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
 
     ```bash
@@ -69,27 +54,69 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 
 ### Installation
 
-TODO: pip install will be update
+Simply type `pip` command below to install this helper.
 
-## Simple Example
+```bash
+pip install dynamixel_helper --user
+```
 
-TODO: one motor
+## 🐣 Simple Example
 
-## Tutorial
+The following code is an example of turning on the motor torque.
 
-TODO: detail tutorial / use new markdown.
+```python
+from dynamixel_helper import DxlHelper
 
-## Maintainers
+helper = DxlHelper("preset/{your_robot}.json")
+motor = helper.get_motor(0)  # id: 0
+motor.set_torque(True)
+```
+
+## 💎 Features
+
+- Motor configurations in JSON format
+- Support for Python 3 and 2
+- Easy multiple USB connections
+
+## 🌱 Tutorials
+
+[Go to tutorials](/tutorial/TUTORIAL.en.md)
+
+## 🚩 Release Notes
+
+
+[Go to release notes](/CHANGELOG.md#Release-Notes)
+
+## 💌 Contributing
+
+- We will welcome whatever your contribution is!
+- If you are planning to send a new `Pull request`, please send them into the `develop` Branch.😍
+### Style Guide
+
+> This style guide is only a recommendation, never more important than your interest and contributions.
+
+- Our default Python style is [PEP 8](https://www.python.org/dev/peps/pep-0008/).
+- If you use [VSCode](https://code.visualstudio.com/) as your code editor, please refer to the following settings. This setting is a part of our `setting.json`.
+
+    ```json
+    {
+        "editor.tabSize": 4,
+        "[json]": {
+            "editor.tabSize": 2
+        },
+        "python.linting.pylintEnabled": false,
+        "python.linting.pep8Enabled": true,
+        "python.linting.enabled": true
+    }
+    ```
+
+## 🔧 Maintainers
 
 - **Hong-ryul Jung** _Initial work_ [ryul1206](https://github.com/ryul1206)
 - **Il-ho Oh** _Initial work_ [ohilho](https://github.com/ohilho)
 
-## Release Notes
+## 📜 Licenses
 
-[here](/CHANGELOG)
-
-## Licenses
-
-The contents of this repository are subject to the [MIT license](/LICENSE) by default, except as noted below.
+The contents of this repository are subject to the [MIT License](/LICENSE) by default, except as noted below.
 
 - Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)
