@@ -12,6 +12,7 @@
 # ros
 ####################################
 
+multilang_md.py
 temp/
 
 # Byte-compiled / optimized / DLL files
@@ -236,11 +237,11 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
 
 *~
 
