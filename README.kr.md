@@ -1,11 +1,12 @@
 # 쉬운 다이나믹셀 헬퍼
 
 ![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+[![Downloads](https://pepy.tech/badge/dynamixel-helper)](https://pepy.tech/project/dynamixel-helper)
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
 
-🌏 [English](README.md), [한국어](README.kr.md)
+🌏 [English](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.md),
+[한국어](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.kr.md)
 
 이 헬퍼는 다이나믹셀 SDK를 래핑(wrapping)한 것입니다. 다이나믹셀 SDK를 어떻게 사용하는지 몰라도 쉽게 모터를 설정하고 구동할 수 있도록 만들었습니다.
 
@@ -80,13 +81,13 @@ motor.set_torque(True)
 
 ## 🌱 튜토리얼
 
-[튜토리얼로 이동](/tutorial/TUTORIAL.kr.md)
+[튜토리얼로 이동](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/tutorial/TUTORIAL.kr.md)
 
 ## 🚩 릴리즈 노트
 
 > 릴리즈 노트는 기복적으로 영어로만 제공될 계획입니다. 그래도 몇가지 중요한 항목은 한글로도 제공하려 합니다.
 
-[Go to release notes](/CHANGELOG.md#Release-Notes)
+[Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
 
 ## 💌 기여하기
 
@@ -120,6 +121,6 @@ motor.set_torque(True)
 
 ## 📜 라이센스
 
-이 저장소에 있는 내용은 기본적으로 [MIT License](/LICENSE)를 따릅니다. 예외적인 항목에 대해서는 아래 목록을 보아주십시오.
+이 저장소에 있는 내용은 기본적으로 [MIT License](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/LICENSE)를 따릅니다. 예외적인 항목에 대해서는 아래 목록을 보아주십시오.
 
 - 다이나믹셀 SDK는 [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)을 따릅니다.

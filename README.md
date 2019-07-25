@@ -1,27 +1,28 @@
 # Easy Dynamixel Helper
 
 ![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+[![Downloads](https://pepy.tech/badge/dynamixel-helper)](https://pepy.tech/project/dynamixel-helper)
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
 
-🌏 [English](README.md), [한국어](README.kr.md)
+🌏 [English](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.md),
+[한국어](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.kr.md)
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
 **Table of Contents**
 
-1. [🚀 Getting Started](#-getting-started)
-    1. [Prerequisites](#prerequisites)
-    2. [Installation](#installation)
-2. [🐣 Simple Example](#-simple-example)
-3. [💎 Features](#-features)
-4. [🌱 Tutorials](#-tutorials)
-5. [🚩 Release Notes](#-release-notes)
-6. [💌 Contributing](#-contributing)
-    1. [Style Guide](#style-guide)
-7. [🔧 Maintainers](#-maintainers)
-8. [📜 Licenses](#-licenses)
+1. [ Getting Started](#-Getting-Started)
+    1. [Prerequisites](#Prerequisites)
+    1. [Installation](#Installation)
+1. [ Simple Example](#-Simple-Example)
+1. [ Features](#-Features)
+1. [ Tutorials](#-Tutorials)
+1. [ Release Notes](#-Release-Notes)
+1. [ Contributing](#-Contributing)
+    1. [Style Guide](#Style-Guide)
+1. [ Maintainers](#-Maintainers)
+1. [ Licenses](#-Licenses)
 
 ## 🚀 Getting Started
 
@@ -80,12 +81,12 @@ motor.set_torque(True)
 
 ## 🌱 Tutorials
 
-[Go to tutorials](/tutorial/TUTORIAL.en.md)
+[Go to tutorials](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/tutorial/TUTORIAL.en.md)
 
 ## 🚩 Release Notes
 
 
-[Go to release notes](/CHANGELOG.md#Release-Notes)
+[Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
 
 ## 💌 Contributing
 
@@ -117,6 +118,6 @@ motor.set_torque(True)
 
 ## 📜 Licenses
 
-The contents of this repository are subject to the [MIT License](/LICENSE) by default, except as noted below.
+The contents of this repository are subject to the [MIT License](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/LICENSE) by default, except as noted below.
 
 - Dynamixel SDK is under the [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)

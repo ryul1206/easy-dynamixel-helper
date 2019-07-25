@@ -10,11 +10,12 @@
 <!-- [common] -->
 
 ![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ryul1206/easy-dynamixel-helper.svg)
-![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+[![Downloads](https://pepy.tech/badge/dynamixel-helper)](https://pepy.tech/project/dynamixel-helper)
 ![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
+![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
 
-🌏 [English](README.md), [한국어](README.kr.md)
+🌏 [English](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.md),
+[한국어](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.kr.md)
 
 <!-- [en] -->
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
@@ -159,9 +160,9 @@ motor.set_torque(True)
 <!-- [common] -->
 
 <!-- [en] -->
-[Go to tutorials](/tutorial/TUTORIAL.en.md)
+[Go to tutorials](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/tutorial/TUTORIAL.en.md)
 <!-- [kr] -->
-[튜토리얼로 이동](/tutorial/TUTORIAL.kr.md)
+[튜토리얼로 이동](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/tutorial/TUTORIAL.kr.md)
 <!-- [common] -->
 
 <!-- [en] -->
@@ -174,7 +175,7 @@ motor.set_torque(True)
 > 릴리즈 노트는 기복적으로 영어로만 제공될 계획입니다. 그래도 몇가지 중요한 항목은 한글로도 제공하려 합니다.
 <!-- [common] -->
 
-[Go to release notes](/CHANGELOG.md#Release-Notes)
+[Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
 
 <!-- [en] -->
 ## 💌 Contributing
@@ -255,9 +256,9 @@ motor.set_torque(True)
 <!-- [common] -->
 
 <!-- [en] -->
-The contents of this repository are subject to the [MIT License](/LICENSE) by default, except as noted below.
+The contents of this repository are subject to the [MIT License](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/LICENSE) by default, except as noted below.
 <!-- [kr] -->
-이 저장소에 있는 내용은 기본적으로 [MIT License](/LICENSE)를 따릅니다. 예외적인 항목에 대해서는 아래 목록을 보아주십시오.
+이 저장소에 있는 내용은 기본적으로 [MIT License](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/LICENSE)를 따릅니다. 예외적인 항목에 대해서는 아래 목록을 보아주십시오.
 <!-- [common] -->
 
 <!-- [en] -->
