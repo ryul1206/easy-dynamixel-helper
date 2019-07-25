@@ -29,22 +29,24 @@ class DxlHelper(object):
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        self.port_handlers = []
-        for port in preset:
-            # Port handle
-            pth = dxlsdk.PortHandler(port['device'])
+        # "/dev/ttyUSB0": PortHandler
+        self.port_handlers = {}
+        for port in preset["ports"]:
+            name = port['device']
+            self.__type_dup_check('Preset Port', name, str, self.port_handlers)
+            pth = dxlsdk.PortHandler(name)
             # Open port
             if pth.openPort():
-                print("Succeeded to open the port: \t\t" + port['device'])
+                print("Succeeded to open the port: \t\t" + name)
             else:
-                getch_exit("Failed to open the port: \t\t" + port['device'])
+                getch_exit("[ERROR] Failed to open the port: \t\t" + name)
             # Set baudrate
             if pth.setBaudRate(port['baudrate']):
-                print("Succeeded to change the baudrate: \t" + port['device'])
+                print("Succeeded to change the baudrate: \t" + name)
             else:
-                getch_exit("Failed to change the baudrate: \t" + port['device'])
+                getch_exit("[ERROR] Failed to change the baudrate: \t" + name)
             # Append
-            self.port_handlers.append(pth)
+            self.port_handlers[name] = pth
 
         ############################################
         #             Packet Handlers
@@ -53,10 +55,9 @@ class DxlHelper(object):
         # KEY: 'protocol version', VALUE: 'packet_handler'
 
         # Duplicate cleaning
-        protocol_set = set([port['protocol version'] for port in preset])
+        protocol_set = set([port['protocol version'] for port in preset["ports"]])
         self.packet_handlers = {
-            version: dxlsdk.PacketHandler(version)
-            for version in protocol_set
+            version: dxlsdk.PacketHandler(version) for version in protocol_set
         }
 
         ############################################
@@ -64,68 +65,63 @@ class DxlHelper(object):
         ############################################
 
         # Motor List
-        idset = set()
-        alset = set()
-        motorList = []
-        for portIndex, port in enumerate(preset):
-            for motor in port['motors']:
-                # ID Validation
-                try:
-                    if not isinstance(motor['id'], int):
-                        getch_exit("[FATAL] Motor_ID must be type Int. Motor ID: {}".format(motor['id']))
-                    elif motor['id'] in idset:
-                        getch_exit("[FATAL] Duplicate Motor_ID exists. Motor ID: {}".format(motor['id']))
-                    else:
-                        idset.add(motor['id'])
-                except KeyError as e:
-                    getch_exit("[FATAL] Motor_ID was not defined.")
-                # Alias Validation
-                try:
-                    if not isinstance(motor['alias'], str):
-                        getch_exit("[ERROR] Alias must be type Str. Alias: {}".format(motor['alias']))
-                    if motor['alias']:
-                        if motor['alias'] in alset:
-                            getch_exit("[ERROR] Duplicate Alias exists. Alias: {}".format(motor['alias']))
-                        else:
-                            alset.add(motor['alias'])
-                    else:
-                        motor['alias'] = None
-                except KeyError as e:
-                    motor.update({'alias': None})
-                # Reconstruct motor list
-                motor.update({
-                    'port': portIndex,
-                    'protocol version': port['protocol version']
-                })
-                motorList.append(motor)
-                # {
-                #     "id": 1,
-                #     "alias": "joint_L1",
-                #     "model": "XM430-W210",
-                #     "port": portIndex
-                #     "protocol version": 2
-                # }
+        id_set = set()
+        alias_set = set()
+        motor_list = []
+        for motor in preset['motors']:
+            # ID Validation
+            try:
+                self.__type_dup_check('Motor ID', motor['id'], int, id_set)
+            except KeyError as e:
+                getch_exit("[FATAL] Motor_ID was not defined.")
+            id_set.add(motor['id'])
+            # Alias Validation
+            try:
+                if motor['alias']:
+                    self.__type_dup_check(
+                        'Motor Alias', motor['alias'], str, alias_set)
+                    alias_set.add(motor['alias'])
+                else:
+                    motor['alias'] = None
+            except KeyError as e:
+                motor.update({'alias': None})
+            # Clean list
+            motor_list.append(motor)
+            # {
+            #     "id": 1,
+            #     "alias": "joint_L1",
+            #     "model": "XM430-W210"
+            # }
 
         # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
         self.__motors = {}
-        for motor in motorList:
+        for motor in motor_list:
             motorInstance = DxlMotor(
-                motor['id'],
-                motor['alias'],
-                motor['model'],
-                self.port_handlers[motor['port']],
-                self.packet_handlers[motor['protocol version']]
-            )
+                motor['id'], motor['alias'], motor['model'],
+                self.port_handlers, self.packet_handlers)
             self.__motors[motor['id']] = motorInstance
             if motor['alias']:
                 self.__motors[motor['alias']] = motorInstance
 
         print("All the motor settings are complete!")
-        print("You have {} motor(s).".format(len(motorList)))
+        print("You have {} motor(s).".format(len(motor_list)))
 
     def __del__(self):
         for port in self.port_handlers:
             port.closePort()
+
+    @staticmethod
+    def __type_dup_check(name, value, expected_type, list_like):
+        fail_msg = ""
+        level = 'ERROR'
+        if not isinstance(value, expected_type):
+            fail_msg = "[{}] {} must be type {}. But: {}".format(
+                level, name, expected_type.__name__, value)
+        elif value in list_like:
+            fail_msg = "[{}] Duplicate value exists. {}: {}".format(
+                level, name, value)
+        if fail_msg:
+            getch_exit(fail_msg)
 
     def get_motor(self, _id):
         return self.__motors[_id]

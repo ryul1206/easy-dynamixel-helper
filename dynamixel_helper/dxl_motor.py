@@ -7,10 +7,12 @@ from byteify import byteify
 
 
 class DxlMotor(object):
-    def __init__(self, _id, alias, model, port_handler, packet_handler):
+    def __init__(self, _id, alias, model, port_handlers, packet_handlers):
         self.id = _id
-        self.port_handler = port_handler
-        self.packet_handler = packet_handler
+
+        # TODO find their handle
+        self.port_handler = !!!
+        self.packet_handler = !!!
 
         # Load control tables
         # TODO customizable path
