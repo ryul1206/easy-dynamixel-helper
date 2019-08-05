@@ -72,9 +72,12 @@ class DxlMotor(object):
             print("Helper: One motor instance was created. id: "+str(self.id))
 
     def __eq__(self, other):
+        """"""
         return self.id == other.id
 
     def __find_correct_handle(self, port_handlers, packet_handlers):
+        """
+        """
         # ##### no error
         # packet O port O (corr_power O)
         # ##### [TxRxResult] There is no status packet!
@@ -111,6 +114,8 @@ class DxlMotor(object):
             raise RuntimeError
 
     def __is_success(self, dxl_result, dxl_error):
+        """
+        """
         if dxl_result != dxlsdk.COMM_SUCCESS:
             # [TxRxResult] There is no status packet!
             # motor power not connected
@@ -123,19 +128,32 @@ class DxlMotor(object):
             return False
         return True
 
+    ############################################
+    #                 EEPROM
+    ############################################
+
+    ############################################
+    #                 RAM
+    ############################################
     def set_torque(self, enable):
+        """
+        """
         dxl_result, dxl_error = self.packet_handler.write1ByteTxRx(
             self.port_handler, self.id, self.RAM['torque enable'],
             1 if enable else 0)
         return self.__is_success(dxl_result, dxl_error)
 
     def set_goal_position(self, dxl_unit):
+        """
+        """
         dxl_result, dxl_error = self.packet_handler.write4ByteTxRx(
             self.port_handler, self.id, self.RAM['goal position'],
             dxl_unit)
         return self.__is_success(dxl_result, dxl_error)
 
     def get_present_position(self):
+        """
+        """
         position, dxl_result, dxl_error = self.packet_handler.read4ByteTxRx(
             self.port_handler, self.id, self.RAM['present position'])
         return position, self.__is_success(dxl_result, dxl_error)

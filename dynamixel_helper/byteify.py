@@ -4,9 +4,12 @@
 import sys
 
 
-# Thanks to Mark Amery from StackOverflow.
-# https://stackoverflow.com/questions/956867/how-to-get-string-objects-instead-of-unicode-from-json
 def byteify(unicode_json):
+    """Correct data type of JSON to python data.
+
+    Thanks to Mark Amery from StackOverflow.
+    https://stackoverflow.com/questions/956867/how-to-get-string-objects-instead-of-unicode-from-json
+    """
     # Python 2.x
     if sys.version_info[0] < 3:
         if isinstance(unicode_json, dict):

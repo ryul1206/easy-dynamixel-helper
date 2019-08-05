@@ -7,28 +7,30 @@ activate_this = os.path.expanduser(
     '~/virtualenv/dxlhelper_py2test/bin/activate_this.py')
 execfile(activate_this, dict(__file__=activate_this))
 
-from dxl_motor import DxlMotor
-from byteify import byteify
-import constant
-import dynamixel_sdk as dxlsdk
-import json
-
-
-# from .dxl_motor import DxlMotor
-# from .byteify import byteify
-
-# SDK Manual
+# The Official Dynamixel SDK Manual is here.
 # http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_porthandler/#python
 
-"""dddd"""
+import json
+import dynamixel_sdk as dxlsdk
+from dxl_motor import DxlMotor
+from byteify import byteify
+# from .dxl_motor import DxlMotor
+# from .byteify import byteify
 
 
 class DxlHelper(object):
     """
-    testtest
+
+    TODO:
+        check alias when empty in json. Is None value correctly inside?
     """
 
     def __init__(self, preset_file, verbosity='minimal'):
+        """Inits
+
+        Raises:
+            df
+        """
         # Verbose
         constant.assert_verbosity(verbosity)
         self.verbosity = constant.verbose_level[verbosity]
@@ -46,30 +48,30 @@ class DxlHelper(object):
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        # "/dev/ttyUSB0": PortHandler
+        # e.g. { "/dev/ttyUSB0": PortHandler }
         self.port_handlers = {}
 
         for port in preset["ports"]:
             name = port['device']
-            self.__type_dup_check('Preset Port', name, str, self.port_handlers)
+            self.__check_type_n_dupe('port.device',
+                                     str, name, self.port_handlers)
             pth = dxlsdk.PortHandler(name)
             # Open port
+            print(pth.openPort())
             if pth.openPort():
                 if self.verbosity >= constant.verbose_level['detailed']:
-                    print("Helper: \"{}\" Succeeded to open the port.".format(
-                        name))
+                    print("Helper: Succeeded to open the port: \""+name+"\"")
             else:
-                print("Helper: [ERROR]")
-                print("        Failed to open the port:       " + name)
+                print("Helper: [ERROR] Failed to open the port: \""+name+"\"")
                 raise RuntimeError
             # Set baudrate
             if pth.setBaudRate(port['baudrate']):
                 if self.verbosity >= constant.verbose_level['detailed']:
-                    print("Helper: \"{}\" Succeeded to set the baudrate: {}".format(
-                        name, port['baudrate']))
+                    print("Helper: The baudrate of \"{}\" is {}."
+                          .format(name, port['baudrate']))
             else:
-                print("Helper: [ERROR]")
-                print("        Failed to change the baudrate: " + name)
+                print("Helper: [ERROR] Failed to set the baudrate of \"{}\""
+                      .format(name))
                 raise RuntimeError
             # Append
             self.port_handlers[name] = pth
@@ -97,20 +99,19 @@ class DxlHelper(object):
         for motor in preset['motors']:
             # ID Validation
             try:
-                self.__type_dup_check('Motor ID', motor['id'], int, id_set)
+                self.__check_type_n_dupe('motor.id',
+                                         int, motor['id'], id_set)
             except KeyError:
-                print("Helper: [ERROR]")
-                print("        Some motors have no ID.")
-                print("        Please check again: " + preset_file)
+                print("Helper: [ERROR] One motor has no ID.")
+                print("        Please check again: "+preset_file)
                 raise RuntimeError
             else:
                 id_set.add(motor['id'])
             # Alias Validation
             try:
-                # TODO check alias when empty in json. Is None value correctly inside?
                 if motor['alias']:
-                    self.__type_dup_check(
-                        'Motor Alias', motor['alias'], str, alias_set)
+                    self.__check_type_n_dupe('motor.alias',
+                                             str, motor['alias'], alias_set)
                     alias_set.add(motor['alias'])
                 else:
                     motor['alias'] = None
@@ -135,7 +136,7 @@ class DxlHelper(object):
                     motor['id'], motor['alias'], motor['model'],
                     self.port_handlers, self.packet_handlers,
                     verbosity=verbosity)
-            except RuntimeError:
+            except:  # to catch all errors
                 logging['X'].append(motor_log)
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: One motor setup was skipped.")
@@ -153,32 +154,36 @@ class DxlHelper(object):
 
         if self.verbosity >= constant.verbose_level['minimal']:
             print("Helper: All motor setups have been completed.")
-            print("        Success: {} motor(s) / Fail: {} motor(s)".format(
-                len(logging['O']), len(logging['X'])))
+            print("        Success: {} motor(s) / Fail: {} motor(s)"
+                  .format(len(logging['O']), len(logging['X'])))
             for ox, logs in logging.items():
                 logs.sort()
                 for log in logs:
-                    print("          ({}) id: {}, alias: {}, model: {}".format(
-                        ox, log[0], log[1], log[2]))
+                    print("          ({}) id: {}, alias: {}, model: {}"
+                          .format(ox, log[0], log[1], log[2]))
 
     def __del__(self):
+        """"""
         for port in self.port_handlers.values():
             port.closePort()
 
     @staticmethod
-    def __type_dup_check(name, value, expected_type, list_like):
+    def __check_type_n_dupe(name, expected_type, value, list_like):
+        """
+        """
         if not isinstance(value, expected_type):
-            print("Helper: [ERROR]")
-            print("        {} must be \'{}\', not \'{}\'. Value: {}".format(
-                name, expected_type.__name__, type(value).__name__, value))
+            print("Helper: [ERROR] \"{}\" must be \'{}\', not \'{}\'."
+                  .format(name, expected_type.__name__, type(value).__name__))
+            print("        Value: {}".format(value))
             raise TypeError
         elif value in list_like:
-            print("Helper: [ERROR]")
-            print("        Duplicate {} detected. Value: {}".format(
-                name, value))
+            print("Helper: [ERROR] Duplicate {} detected. Value: {}"
+                  .format(name, value))
             raise ValueError
 
     def get_motor(self, _id):
+        """
+        """
         return self.__motors[_id]
 
 
