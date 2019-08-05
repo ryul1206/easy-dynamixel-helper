@@ -26,7 +26,9 @@ class DxlMotor(object):
         RAM:
     """
 
-    def __init__(self, id_, alias, model, port_handlers, packet_handlers,
+    def __init__(self, id_, alias, model,
+                 port_handlers, baud_rates,
+                 packet_handlers,
                  verbosity):
         """Inits
 
@@ -35,6 +37,7 @@ class DxlMotor(object):
             alias:
             model:
             port_handlers:
+            baud_rates:
             packet_handlers:
             verbosity: 'quiet' or 'minimal' or 'detailed'
         Raises:
@@ -62,11 +65,16 @@ class DxlMotor(object):
             control_table = json.load(f, object_hook=byteify)
         self.EEPROM = control_table['eeprom']
         self.RAM = control_table['ram']
-        # port_handlers['/dev/ttyUSB0']
-        # packet_handlers[1.0]
+
+        # Properties
+        self.port_name = ""
+        self.protocol = None
+        self.baud = None
+        # port_handlers: {'/dev/ttyUSB0': {'handler:xx, 'baud rate':None}}
+        # packet_handlers: {2.0: xx}
         self.port_handler = None
         self.packet_handler = None
-        self.__find_correct_handle(port_handlers, packet_handlers)
+        self.__find_correct_handle(port_handlers, baud_rates, packet_handlers)
 
         if self.verbosity >= constant.verbose_level['detailed']:
             print("Helper: One motor instance was created. id: "+str(self.id))
@@ -75,43 +83,82 @@ class DxlMotor(object):
         """"""
         return self.id == other.id
 
-    def __find_correct_handle(self, port_handlers, packet_handlers):
+    def __find_correct_handle(self,
+                              port_handlers, baud_rates,
+                              packet_handlers):
         """
+        1. Get all combinations of (port, packet) tuples
+
+        2. Find correct baud rate
+           "setBaudRate()" returns True if the baud value is "possible".
+           Without a motor, we don't know which value is actually matched.
         """
-        # ##### no error
-        # packet O port O (corr_power O)
-        # ##### [TxRxResult] There is no status packet!
-        # packet O port O (corr_power X)
-        # packet O port X (worng_power O)
-        # packet O port X (worng_power X)
-        # packet X port O (corr_power O)
-        # packet X port O (corr_power X)
-        # packet X port X (worng_power O)
-        # packet X port X (worng_power X)
-        success = False
+
+        # Find correct baud rate
+        # found = False
+        # for baud in preset['baud rates']:
+        #     found = port_handler.setBaudRate(baud)
+        #     print("======= ", found, baud)
+        #     if found:
+        #         if self.verbosity >= constant.verbose_level['detailed']:
+        #             print("Helper: The baudrate of \"{}\" is {}."
+        #                     .format(name, port['baudrate']))
+        #         break
+
+        # if not found:
+        #     print("Helper: [ERROR] Failed to set the baudrate of \"{}\""
+        #             .format(name))
+        #     raise RuntimeError
+        # Append
+        # self.port_handlers[name] = port_handler
 
         # These are intended error!
         # So, change the verbosity level to 'quiet' temporarily.
         original_verbosity = self.verbosity
-        self.verbosity = constant.verbose_level['quiet']
-        # Get all combinations of (port, packet) tuples
-        for port, packet in product(port_handlers.values(),
-                                    packet_handlers.values()):
-            self.port_handler = port
-            self.packet_handler = packet
-            _, success = self.get_present_position()
+        # self.verbosity = constant.verbose_level['quiet']
+
+        print("??????????")
+
+        success = False
+        # Get all cases of (port, packet) tuples
+        print(cases)
+        print(port_handlers)
+        print(packet_handlers)
+        print(baud_rates)
+        for port, packet in product(port_handlers, packet_handlers):
+            self.port_handler = port_handlers[port]['handler']
+            self.packet_handler = packet_handlers[packet]
+
+            original_baud = port_handler[port]['baud rate']
+            print("++++++++++++++++++++")
+            print(original_baud)
+            for baud in baud_rates:
+                if original_baud is None:
+                    self.port_handler.setBaudRate(baud)
+                else:
+                    continue
+                pose, success = self.get_present_position()
+                if success:
+                    print("============", port, packet, baud)
+                    self.port_name = port
+                    self.protocol = packet
+                    self.baud = baud
+                    port_handler[port]['baud rate'] = baud
+                    break
             if success:
                 break
         self.verbosity = original_verbosity
+
         if not success:
             print("Helper: [ERROR] ID:{}, Alias:{}, Model:{}".format(
                 self.id, self.alias, self.model))
             print("        Motor connection failed.")
-            print("        Please check your connection or \"[preset].json\".")
+            print("        Please check the connection or \"<preset>.json\".")
             print("        Common causes of this phenomenon like below:")
-            print("          1. The power of a motor is turned off.")
-            print("          2. Some port description is wrong in the JSON.")
+            print("          1. The motor is turned OFF.")
+            print("          2. Some port descriptions are incorrect in JSON.")
             raise RuntimeError
+        print("")
 
     def __is_success(self, dxl_result, dxl_error):
         """

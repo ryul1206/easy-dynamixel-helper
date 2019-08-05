@@ -11,6 +11,7 @@ execfile(activate_this, dict(__file__=activate_this))
 # http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/api_reference/python/python_porthandler/#python
 
 import json
+import constant
 import dynamixel_sdk as dxlsdk
 from dxl_motor import DxlMotor
 from byteify import byteify
@@ -48,33 +49,28 @@ class DxlHelper(object):
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        # e.g. { "/dev/ttyUSB0": PortHandler }
+        # e.g.
+        # {
+        #     "/dev/ttyUSB0": {
+        #         "handler": PortHandler,
+        #         "baud rate": None
+        # }
         self.port_handlers = {}
 
-        for port in preset["ports"]:
-            name = port['device']
-            self.__check_type_n_dupe('port.device',
-                                     str, name, self.port_handlers)
-            pth = dxlsdk.PortHandler(name)
-            # Open port
-            print(pth.openPort())
-            if pth.openPort():
+        # Open port
+        for name in preset['ports']:
+            self.__check_type_n_dupe('port', str, name, self.port_handlers)
+            port_handler = dxlsdk.PortHandler(name)
+            try:
+                port_handler.openPort()
+            except Exception as inst:
+                print("Helper: [ERROR] " + inst.__str__())
+                raise inst
+            else:
+                self.port_handlers[name] = {'handler': port_handler,
+                                            'baud rate': None}
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: Succeeded to open the port: \""+name+"\"")
-            else:
-                print("Helper: [ERROR] Failed to open the port: \""+name+"\"")
-                raise RuntimeError
-            # Set baudrate
-            if pth.setBaudRate(port['baudrate']):
-                if self.verbosity >= constant.verbose_level['detailed']:
-                    print("Helper: The baudrate of \"{}\" is {}."
-                          .format(name, port['baudrate']))
-            else:
-                print("Helper: [ERROR] Failed to set the baudrate of \"{}\""
-                      .format(name))
-                raise RuntimeError
-            # Append
-            self.port_handlers[name] = pth
 
         ############################################
         #             Packet Handlers
@@ -83,8 +79,7 @@ class DxlHelper(object):
         # KEY: 'protocol version', VALUE: 'packet_handler'
 
         # Duplicate cleaning
-        protocol_set = set(
-            [port['protocol version'] for port in preset["ports"]])
+        protocol_set = set(preset["protocol versions"])
         self.packet_handlers = {
             version: dxlsdk.PacketHandler(version) for version in protocol_set}
 
@@ -99,8 +94,7 @@ class DxlHelper(object):
         for motor in preset['motors']:
             # ID Validation
             try:
-                self.__check_type_n_dupe('motor.id',
-                                         int, motor['id'], id_set)
+                self.__check_type_n_dupe('motor.id', int, motor['id'], id_set)
             except KeyError:
                 print("Helper: [ERROR] One motor has no ID.")
                 print("        Please check again: "+preset_file)
@@ -110,8 +104,7 @@ class DxlHelper(object):
             # Alias Validation
             try:
                 if motor['alias']:
-                    self.__check_type_n_dupe('motor.alias',
-                                             str, motor['alias'], alias_set)
+                    self.__check_type_n_dupe('motor.alias', str, motor['alias'], alias_set)
                     alias_set.add(motor['alias'])
                 else:
                     motor['alias'] = None
@@ -130,11 +123,12 @@ class DxlHelper(object):
         self.__motors = {}
         logging = {'O': [], 'X': []}
         for motor in motor_list:
-            motor_log = (motor['id'], motor['alias'], motor['model'])
+            motor_log = [motor['id'], motor['alias'], motor['model']]
             try:
                 motorInstance = DxlMotor(
                     motor['id'], motor['alias'], motor['model'],
-                    self.port_handlers, self.packet_handlers,
+                    self.port_handlers, preset['baud rates'],
+                    self.packet_handlers,
                     verbosity=verbosity)
             except:  # to catch all errors
                 logging['X'].append(motor_log)
@@ -147,6 +141,10 @@ class DxlHelper(object):
                     self.__motors[motor['alias']] = motorInstance
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: One motor setup was completed.")
+            # finally:
+            #     pass
+            #     motor_log.append(motorInstance.port_name)
+            #     motor_log.append(motorInstance.baud)
 
         ############################################
         #                 Log
@@ -159,13 +157,13 @@ class DxlHelper(object):
             for ox, logs in logging.items():
                 logs.sort()
                 for log in logs:
-                    print("          ({}) id: {}, alias: {}, model: {}"
+                    print("          ({}) id:{}, alias:{}, model:{}"
                           .format(ox, log[0], log[1], log[2]))
 
     def __del__(self):
         """"""
         for port in self.port_handlers.values():
-            port.closePort()
+            port['handler'].closePort()
 
     @staticmethod
     def __check_type_n_dupe(name, expected_type, value, list_like):
@@ -189,12 +187,15 @@ class DxlHelper(object):
 
 if __name__ == "__main__":
 
-    d = DxlHelper("asdfasdfasdf.json")
+    d = DxlHelper("minimal.json", verbosity='detailed')
+
+    def move(id_, v):
+        motor = d.get_motor(id_)
+        motor.set_torque(True)
+        dxl_unit, _ = motor.get_present_position()
+        print(motor.set_goal_position((dxl_unit + v) % 4096))
 
     print("--------------------")
-    motor_id = 0
-    motor = d.get_motor(motor_id)
-
-    motor.set_torque(True)
-    dxl_unit, _ = motor.get_present_position()
-    print(motor.set_goal_position((dxl_unit + 2048) % 4096))
+    move(0, 500)
+    print("--------------------")
+    move(1, 2000)
