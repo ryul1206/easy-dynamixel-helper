@@ -51,23 +51,37 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 ### 사전에 필요한 것
 <!-- [common] -->
 
-**1. pip**
+<!-- [en] -->
+1. **pip (package manager)**
 
-- Python 2
+   **CAUTION💥**: Please install the `pip` **before** installing the `Dynamixel SDK`. Otherwise, when you install this `Dynamixel Helper`, you will get an dependency error of `Dynamixel SDK`.
+<!-- [kr] -->
+1. **pip (파이썬 패키지 관리자)**
 
+   **주의💥**: 반드시 `Dynamixel SDK`를 설치하기 **전에** `pip`부터 설치하여 주세요. 그렇지 않으면 `Dynamixel Helper`를 설치할 때 `Dynamixel SDK`를 찾을 수 없다는 의존성 오류가 발생합니다.
+<!-- [common] -->
+
+<!-- [en] -->
     ```bash
+    # Python 2
     sudo apt install python-pip
     python -m pip install -U pip
-    ```
-
-- Python 3
-
-    ```bash
+    # Python 3
     sudo apt install python3-pip
     python3 -m pip install -U pip
     ```
+<!-- [kr] -->
+    ```bash
+    # 파이썬 2
+    sudo apt install python-pip
+    python -m pip install -U pip
+    # 파이썬 3
+    sudo apt install python3-pip
+    python3 -m pip install -U pip
+    ```
+<!-- [common] -->
 
-**2. Dynamixel SDK**
+2. **Dynamixel SDK**
 
 <!-- [en] -->
 You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.

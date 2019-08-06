@@ -28,23 +28,20 @@
 
 ### 사전에 필요한 것
 
-**1. pip**
+1. **pip (파이썬 패키지 관리자)**
 
-- Python 2
+   **주의💥**: 반드시 `Dynamixel SDK`를 설치하기 **전에** `pip`부터 설치하여 주세요. 그렇지 않으면 `Dynamixel Helper`를 설치할 때 `Dynamixel SDK`를 찾을 수 없다는 의존성 오류가 발생합니다.
 
     ```bash
+    # 파이썬 2
     sudo apt install python-pip
     python -m pip install -U pip
-    ```
-
-- Python 3
-
-    ```bash
+    # 파이썬 3
     sudo apt install python3-pip
     python3 -m pip install -U pip
     ```
 
-**2. Dynamixel SDK**
+2. **Dynamixel SDK**
 
 헬퍼를 설치하기 전에 로보티즈 사에서 제공하는 공식 [다이나믹셀 SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK)가 있어야 합니다.
 
