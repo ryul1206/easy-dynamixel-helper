@@ -28,6 +28,24 @@
 
 ### 사전에 필요한 것
 
+**1. pip**
+
+- Python 2
+
+    ```bash
+    sudo apt install python-pip
+    python -m pip install -U pip
+    ```
+
+- Python 3
+
+    ```bash
+    sudo apt install python3-pip
+    python3 -m pip install -U pip
+    ```
+
+**2. Dynamixel SDK**
+
 헬퍼를 설치하기 전에 로보티즈 사에서 제공하는 공식 [다이나믹셀 SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK)가 있어야 합니다.
 
 <details><summary>클릭하여 보기: 다이나믹셀 SDK 설치 방법</summary>
@@ -47,7 +65,7 @@
 3. 관리자 권한으로 `setup.py`를 실행하면 SDK 설치가 끝납니다.
 
     ```bash
-    sudo python setup.py install
+    python setup.py install
     ```
 
 </p>

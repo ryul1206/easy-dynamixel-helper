@@ -1,0 +1,2 @@
+/home/hr/virtualenv/dxlhelper_py3test/lib/python3.6/site-packages/dynamixel_helper-0.1.0-py3.6.egg
+/home/hr/virtualenv/dxlhelper_py3test/bin/miniterm.py

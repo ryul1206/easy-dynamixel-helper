@@ -28,6 +28,24 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 
 ### Prerequisites
 
+**1. pip**
+
+- Python 2
+
+    ```bash
+    sudo apt install python-pip
+    python -m pip install -U pip
+    ```
+
+- Python 3
+
+    ```bash
+    sudo apt install python3-pip
+    python3 -m pip install -U pip
+    ```
+
+**2. Dynamixel SDK**
+
 You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
 
 <details><summary>Click here: Dynamixel SDK Installation</summary>
@@ -47,7 +65,7 @@ You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/
 3. Run `setup.py` as administrator to install the library.
 
     ```bash
-    sudo python setup.py install
+    python setup.py install
     ```
 
 </p>

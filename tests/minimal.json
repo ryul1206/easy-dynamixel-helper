@@ -1,6 +1,6 @@
 {
   "ports":[ "/dev/ttyUSB0", "/dev/ttyUSB1" ],
-  "baud rates":[ 57600 ],
+  "baud rates":[ 57600, 9600 ],
   "protocol versions":[ 2.0 ],
   "motors":[
     {

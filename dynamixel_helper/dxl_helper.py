@@ -7,7 +7,7 @@
 import json
 import dynamixel_sdk as dxlsdk
 
-import .constant
+import constant
 from .dxl_motor import DxlMotor
 from .byteify import byteify
 
@@ -17,7 +17,8 @@ class DxlHelper(object):
 
     Attributes:
         verbosity: <int>
-        port_handlers: {'/dev/ttyUSB':{'handler':PortHandler, 'baudrate':None}}
+        port_handlers: {
+            '/dev/ttyUSB':{'handler':PortHandler, 'baud rate':None}}
         packet_handlers: {2.0:PacketHandler}
         __motors: <dict> The ID is a key and motorInstance is a value.
     TODO:
@@ -55,7 +56,7 @@ class DxlHelper(object):
         # {
         #     "/dev/ttyUSB0": {
         #         "handler": PortHandler,
-        #         "baudrate": None
+        #         "baud rate": None
         # }
 
         # Open port
@@ -69,7 +70,7 @@ class DxlHelper(object):
                 raise inst
             else:
                 self.port_handlers[name] = {'handler': port_handler,
-                                            'baudrate': None}
+                                            'baud rate': None}
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: Succeeded to open the port: \""+name+"\"")
 
@@ -127,12 +128,14 @@ class DxlHelper(object):
             try:
                 motorInstance = DxlMotor(
                     motor['id'], motor['alias'], motor['model'],
-                    self.port_handlers, preset['baudrates'],
+                    self.port_handlers, preset['baud rates'],
                     self.packet_handlers, verbosity=verbosity)
-            except:  # to catch all errors
+            except Exception as inst:  # to catch all errors
                 logging['X'].append(motor_log)
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: One motor setup was skipped.")
+                    print("        The reason is: \""+inst.__str__()+"\"")
+                    raise inst
             else:
                 logging['O'].append(motor_log)
                 self.__motors[motor['id']] = motorInstance

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import json
 import dynamixel_sdk as dxlsdk
 from itertools import product
 
-import .constant
+import constant
 from .byteify import byteify
 
 
@@ -25,7 +26,7 @@ class DxlMotor(object):
         RAM: <dict> Address of RAM section
     """
 
-    def __init__(self, id_, alias, model, port_handlers, baudrates,
+    def __init__(self, id_, alias, model, port_handlers, baud_rates,
                  packet_handlers, verbosity):
         """Inits
 
@@ -34,7 +35,7 @@ class DxlMotor(object):
             alias: .
             model: .
             port_handlers: .
-            baudrates: .
+            baud_rates: .
             packet_handlers: .
             verbosity: 'quiet' or 'minimal' or 'detailed'
         Raises:
@@ -54,18 +55,20 @@ class DxlMotor(object):
 
         # Load control tables
         # TODO customizable path
-        control_table_path = "./config/"
+        pkg_directory = os.path.dirname(os.path.abspath(__file__))
+        control_table_path = pkg_directory + "/config/"
         control_table_file = control_table_path + model + ".json"
+
         with open(control_table_file, 'r') as f:
             control_table = json.load(f, object_hook=byteify)
         self.EEPROM = control_table['eeprom']
         self.RAM = control_table['ram']
 
-        # port_handlers: {'/dev/ttyUSB0': {'handler:xx, 'baudrate':None}}
+        # port_handlers: {'/dev/ttyUSB0': {'handler:xx, 'baud rate':None}}
         # packet_handlers: {2.0: xx}
         self.port_handler = None
         self.packet_handler = None
-        self.__find_correct_handle(port_handlers, baudrates, packet_handlers)
+        self.__find_correct_handle(port_handlers, baud_rates, packet_handlers)
 
         if self.verbosity >= constant.verbose_level['detailed']:
             print("Helper: One motor instance was created. id: "+str(self.id))
@@ -74,31 +77,37 @@ class DxlMotor(object):
         """Compare with ID"""
         return self.id == other.id
 
-    def __find_correct_handle(self, port_handlers, baudrates, packet_handlers):
+    def __find_correct_handle(self, port_handlers, baud_rates, packet_handlers):
         """Try all possibilities and save success case.
 
         1. Get all combinations of (port, packet) tuples
-        2. Find correct baudrate
+        2. Find correct baud rate
            "setBaudRate()" returns True if the baud value is "possible".
            Without a motor, we don't know which value is actually matched.
 
         Raises:
             RuntimeError: If there is no matched options
         """
+        if self.verbosity >= constant.verbose_level['detailed']:
+            print("Helper: [START] a validation of port and baud-rate.")
+            print("           ==> ID:{}".format(self.id))
         # These are intended error!
         # So, change the verbosity level to 'quiet' temporarily.
         original_verbosity = self.verbosity
-        self.verbosity = constant.verbose_level['quiet']
+        if self.verbosity <= constant.verbose_level['minimal']:
+            self.verbosity = constant.verbose_level['quiet']
 
         success = False
+        failed_at_least_once = False
+        
         # Get all cases of (port, packet) tuples
         for port, packet in product(port_handlers, packet_handlers):
             self.port_handler = port_handlers[port]['handler']
             self.packet_handler = packet_handlers[packet]
 
-            original_baud = port_handler[port]['baudrate']
+            original_baud = port_handlers[port]['baud rate']
 
-            for baud in baudrates:
+            for baud in baud_rates:
                 if original_baud is None:
                     self.port_handler.setBaudRate(baud)
                 else:
@@ -108,12 +117,24 @@ class DxlMotor(object):
                     self.port_name = port
                     self.protocol = packet
                     self.baud = baud
-                    port_handler[port]['baudrate'] = baud
+                    port_handlers[port]['baud rate'] = baud
                     break
+                else:
+                    failed_at_least_once = True
             if success:
                 break
 
         self.verbosity = original_verbosity
+
+        if self.verbosity >= constant.verbose_level['detailed']:
+            if failed_at_least_once:
+                print("Helper: ⤷ Do not worry, if the message you are seeing is")
+                print("            \"[TxRxResult] There is no status packet!\".")
+                print("          This is the intended error. This is an error generated")
+                print("          by the process of matching the port and baud rate automatically.")
+                print("          Only displayed when verbosity is \"detailed\".")
+            print("Helper: [FINISH] the validation of port and baud-rate.")
+            print("           ==> ID:{}".format(self.id))
 
         if not success:
             print("Helper: [ERROR] ID:{}, Alias:{}, Model:{}".format(
@@ -122,7 +143,7 @@ class DxlMotor(object):
             print("        Please check the connection or \"<preset>.json\".")
             print("        Common causes of this phenomenon like below:")
             print("          1. The motor is turned OFF.")
-            print("          2. Using a different baudrate in the same port.")
+            print("          2. Using a different baud rate in the same port.")
             print("          3. Some other descriptions are incorrect in \"<preset>.json\".")
             raise RuntimeError
 
