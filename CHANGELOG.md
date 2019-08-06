@@ -1,47 +1,7 @@
-# CHANGELOG
+# Release Notes
 
-1. [Tasks](#tasks)
-    1. [Future](#future)
-    2. [Done (Release Candidates)](#done-release-candidates)
-2. [Release Notes](#release-notes)
-    1. [0.0.0 (2019.07.22)](#000-20190722)
-
-## Tasks
-
-<!-- Tags
-NEW : added new feature
-FIX : bug fixed
-IMPROVE : feature improved
-REMOVE : feature removed
-OTHER
--->
-
-### Future
-
-- **NEW**: Handle the indirect address section
-- **NEW**: Supports multiple robot connections with the same ID configuration
-- **NEW**: Control tables of all dxl motors
-- **NEW**: Basic tutorials
-
-<!--  -->
-
-- **IMPROVE**: Separate motor and port information from `preset`
-    - (eng) The current form needs to know which motors connected in which port. This is very cumbersome.
-    - (kor) 현재의 양식은 모터가 어느 포트에 소속되어 있는지 알아야 합니다. 이것은 매우 번거롭기 때문에 `preset`에서 분리하려 합니다.
-- **IMPROVE**: Wrapping more features from the Dynamixel SDK
-- **IMPROVE**: Property decorator
-- **IMPROVE**: `DxlMotor`. Customizable path for control table
-- **IMPROVE**: Singleton with arguments. Duplicate `dxl_helper` issue
-
-<!--  -->
-
-- **OTHER**: ([PEP 257](https://www.python.org/dev/peps/pep-0257/)) Comment for all functions
-
-### Done (Release Candidates)
-
----
-
-## Release Notes
+1. [1.0.0 (2019.08.07)](#100-20190807)
+2. [0.0.0 (2019.07.22)](#000-20190722)
 
 <!-- Tags
 NEW : added new feature
@@ -52,17 +12,42 @@ OTHER
 TESTED
 -->
 
-### 0.0.0 (2019.07.22)
+## 1.0.0 (2019.08.07)
+
+(eng) Now you no longer need to know which motor is connected to which port. Auto-matching will solve this problem.
+
+(kor) 이제는 더이상 어떤 모터가 어떤 포트에 연결되어 있는지 확인하지 않아도 됩니다. 자동매칭 기능이 이 문제를 해결해 줄 것입니다.
+
+- **NEW**: **Auto matching process! (port, baud-rate, protocol)**
+- **NEW**: Add the control table of `XM430-W250`
+- **NEW**: set_drive_mode, set_operating_mode, get_torque, set_goal_velocity, get_present_velocity
+
+<!--  -->
+
+- **REMOVED**: Old style json. Now, we are in the new version.
+
+<!--  -->
+
+- **OTHER**: ([PEP 257](https://www.python.org/dev/peps/pep-0257/)) Comment for all functions
+
+<!--  -->
+
+- **TESTED**: New style json.(XM430-W210, 2 ports, 2 motors, Ubuntu 18.04)
+
+## 0.0.0 (2019.07.22)
 
 1st Release! Yeah!
 
-- **NEW**: 2 Basic features (torque on/off and position command)
+- **NEW**: Basic features (torque on/off and position command)
 - **NEW**: Apply [CodeFactor](https://www.codefactor.io/) to manage code quality
 - **NEW**: Multilangual README and tutorials (We are using [Multilingual Markdown Generator](https://github.com/ryul1206/multilingual-markdown)!!)
 
 <!--  -->
 
 - **TESTED**: Test basic features with actual motor(XM430-W210) in Python 2.x and 3.x
+    - set_torque
+    - set_goal_position
+    - get_present_position
 
 ---
 

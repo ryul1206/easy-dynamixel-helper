@@ -23,6 +23,10 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 이 헬퍼는 다이나믹셀 SDK를 래핑(wrapping)한 것입니다. 다이나믹셀 SDK를 어떻게 사용하는지 몰라도 쉽게 모터를 설정하고 구동할 수 있도록 만들었습니다.
 <!-- [common] -->
 
+```bash
+pip install dynamixel_helper --user
+```
+
 <!-- [ignore] -->
 <!-- TODO: update figure (direct writing on the control table) -->
 <!-- Your code ===> DXL Helper ===> Your motor(control table) -->
@@ -40,6 +44,54 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 <!-- https://gist.github.com/PurpleBooth -->
 
 <!-- [en] -->
+## 💎 Features
+<!-- [kr] -->
+## 💎 특징들
+<!-- [common] -->
+
+<!-- [en] -->
+- Baud rate auto-matching
+- Protocol auto-matching
+- Port auto-matching (*Easy connections in multi-USB*)
+<!-- [kr] -->
+- 보드레이트 자동 매칭
+- 프로토콜 자동 매칭
+- 포트 자동 매칭 (*쉬워진 다중 USB 연결*)
+<!-- [en] -->
+- Motor configurations in JSON format
+- Support for Python 3 and 2
+<!-- [kr] -->
+- 파이썬 3 및 2 지원
+- JSON 형태로 모터 환경설정
+<!-- [en] -->
+- Make your code simple and clean
+- **Easy to use even for beginners.**
+<!-- [kr] -->
+- 여러분의 코드를 간결하게 만들어 줍니다.
+- **초보자도 사용하기가 쉽습니다.**
+<!-- [common] -->
+
+<!-- [en] -->
+## 🐣 Simple Example
+<!-- [kr] -->
+## 🐣 간단한 예제
+<!-- [common] -->
+
+<!-- [en] -->
+The following code is an example of turning on the motor torque.
+<!-- [kr] -->
+아래의 코드는 모터의 토크를 켜는 예제입니다.
+<!-- [common] -->
+
+```python
+from dynamixel_helper import DxlHelper
+
+helper = DxlHelper("preset/{my_robot}.json")
+motor = helper.get_motor(0)  # id: 0
+motor.set_torque(True)
+```
+
+<!-- [en] -->
 ## 🚀 Getting Started
 <!-- [kr] -->
 ## 🚀 시작하기
@@ -53,12 +105,8 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 
 <!-- [en] -->
 1. **pip (package manager)**
-
-   **CAUTION💥**: Please install the `pip` **before** installing the `Dynamixel SDK`. Otherwise, when you install this `Dynamixel Helper`, you will get an dependency error of `Dynamixel SDK`.
 <!-- [kr] -->
 1. **pip (파이썬 패키지 관리자)**
-
-   **주의💥**: 반드시 `Dynamixel SDK`를 설치하기 **전에** `pip`부터 설치하여 주세요. 그렇지 않으면 `Dynamixel Helper`를 설치할 때 `Dynamixel SDK`를 찾을 수 없다는 의존성 오류가 발생합니다.
 <!-- [common] -->
 
 <!-- [en] -->
@@ -84,50 +132,59 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 2. **Dynamixel SDK**
 
 <!-- [en] -->
-You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
+    **CAUTION💥**: Please install the `pip` **before** installing the `Dynamixel SDK`. Otherwise, when you install this `Dynamixel Helper`, you will get an dependency error of `Dynamixel SDK`.
+
+    You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
 <!-- [kr] -->
-헬퍼를 설치하기 전에 로보티즈 사에서 제공하는 공식 [다이나믹셀 SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK)가 있어야 합니다.
+    **주의💥**: 반드시 `Dynamixel SDK`를 설치하기 **전에** `pip`부터 설치하여 주세요. 그렇지 않으면 `Dynamixel Helper`를 설치할 때 `Dynamixel SDK`를 찾을 수 없다는 의존성 오류가 발생합니다.
+    
+    헬퍼를 설치하기 전에 로보티즈 사에서 제공하는 공식 [다이나믹셀 SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK)가 있어야 합니다.
 <!-- [common] -->
 
 <!-- [en] -->
-<details><summary>Click here: Dynamixel SDK Installation</summary>
-<p>
+    <details><summary>Click here: Dynamixel SDK Installation</summary>
+    <p>
 <!-- [kr] -->
-<details><summary>클릭하여 보기: 다이나믹셀 SDK 설치 방법</summary>
-<p>
+    <details><summary>클릭하여 보기: 다이나믹셀 SDK 설치 방법</summary>
+    <p>
 <!-- [common] -->
 
 <!-- [en] -->
-1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
+    1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
 <!-- [kr] -->
-1. 라이브러리를 설치할 공간에 공식 SDK 코드를 내려받습니다. 예를 들어, 저는 `~/lib` 폴더를 만들었습니다.
+    1. 라이브러리를 설치할 공간에 공식 SDK 코드를 내려받습니다. 예를 들어, 저는 `~/lib` 폴더를 만들었습니다.
 <!-- [common] -->
 
-    ```bash
-    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-    ```
-<!-- [en] -->
-2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
-<!-- [kr] -->
-2. 방금 내려받은 SDK 폴더에서 `/DynamixelSDK/python` 위치로 이동합니다.
-<!-- [common] -->
-
-    ```bash
-    cd ${your_download_path}/DynamixelSDK/python
-    ```
+        ```bash
+        git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+        ```
 
 <!-- [en] -->
-3. Run `setup.py` as administrator to install the library.
+    2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
+
+        ```bash
+        cd ${your_download_path}/DynamixelSDK/python
+        ```
 <!-- [kr] -->
-3. 관리자 권한으로 `setup.py`를 실행하면 SDK 설치가 끝납니다.
+    2. 방금 내려받은 SDK 폴더에서 `/DynamixelSDK/python` 위치로 이동합니다.
+
+        ```bash
+        cd ${여러분의_다운로드_경로}/DynamixelSDK/python
+        ```
 <!-- [common] -->
 
-    ```bash
-    python setup.py install
-    ```
+<!-- [en] -->
+    3. Run `setup.py` with `--user` option to install the library. Administrator privileges, a.k.a. `sudo`, are not recommended. More information [here](https://pages.charlesreid1.com/dont-sudo-pip/).
+<!-- [kr] -->
+    3. `--user` 옵션과 함께 `setup.py`를 실행하면 SDK 설치가 끝납니다. 흔히 `sudo`라고 하는 관리자 권한은 추천하지 않습니다. 자세한 이유은 [이 글(한국어)](https://medium.com/@chullino/sudo-%EC%A0%88%EB%8C%80-%EC%93%B0%EC%A7%80-%EB%A7%88%EC%84%B8%EC%9A%94-8544aa3fb0e7)을 참고해 주세요.
+<!-- [common] -->
 
-</p>
-</details>
+        ```bash
+        python setup.py install --user
+        ```
+
+    </p>
+    </details>
 
 <!-- [en] -->
 ### Installation
@@ -144,46 +201,6 @@ Simply type `pip` command below to install this helper.
 ```bash
 pip install dynamixel_helper --user
 ```
-
-<!-- [en] -->
-## 🐣 Simple Example
-<!-- [kr] -->
-## 🐣 간단한 예제
-<!-- [common] -->
-
-<!-- [en] -->
-The following code is an example of turning on the motor torque.
-<!-- [kr] -->
-아래의 코드는 모터의 토크를 켜는 예제입니다.
-<!-- [common] -->
-
-```python
-from dynamixel_helper import DxlHelper
-
-helper = DxlHelper("preset/{your_robot}.json")
-motor = helper.get_motor(0)  # id: 0
-motor.set_torque(True)
-```
-
-<!-- [en] -->
-## 💎 Features
-<!-- [kr] -->
-## 💎 특징들
-<!-- [common] -->
-
-<!-- [en] -->
-- Motor configurations in JSON format
-<!-- [kr] -->
-- JSON 양식으로 모터 구성을 설정
-<!-- [en] -->
-- Support for Python 3 and 2
-<!-- [kr] -->
-- 파이썬 3 및 2 지원
-<!-- [en] -->
-- Easy multiple USB connections
-<!-- [kr] -->
-- 쉬워진 USB 다중 연결
-<!-- [common] -->
 
 <!-- [en] -->
 ## 🌱 Tutorials

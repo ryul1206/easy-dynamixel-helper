@@ -56,7 +56,7 @@ class DxlMotor(object):
         # Load control tables
         # TODO customizable path
         pkg_directory = os.path.dirname(os.path.abspath(__file__))
-        control_table_path = pkg_directory + "/config/"
+        control_table_path = pkg_directory + "/tables/"
         control_table_file = control_table_path + model + ".json"
 
         with open(control_table_file, 'r') as f:
@@ -172,6 +172,37 @@ class DxlMotor(object):
     ############################################
     #                 EEPROM
     ############################################
+    def set_drive_mode(self, mode):
+        """Change drive mode.(EEPROM)
+
+        Return:
+            <bool> True is a success. False is a fail.
+        """
+        if self.get_torque() is False:
+            print("Helper: [ERROR] You can edit the EEPROM section ONLY when the torque is disabled.")
+        dxl_result, dxl_error = self.packet_handler.write1ByteTxRx(
+            self.port_handler, self.id, self.EEPROM['drive mode'], mode)
+        return self.__is_success(dxl_result, dxl_error)
+
+
+    def set_operating_mode(self, mode):
+        """Change operating mode.(EEPROM)
+        
+        Return:
+            <bool> True is a success. False is a fail.
+        Raises:
+            ValueError: If input mode is not supported
+        """
+        val = (1, 3, 4, 16)
+        if mode not in val:
+            print("Helper: [ERROR] This is incorrect operating mode.")
+            print("        Supported modes are: "+str(val))
+            raise ValueError(mode)
+        if self.get_torque() is False:
+            print("Helper: [ERROR] You can edit the EEPROM section ONLY when the torque is disabled.")
+        dxl_result, dxl_error = self.packet_handler.write1ByteTxRx(
+            self.port_handler, self.id, self.EEPROM['operating mode'], mode)
+        return self.__is_success(dxl_result, dxl_error)
 
     ############################################
     #                 RAM
@@ -189,6 +220,30 @@ class DxlMotor(object):
             1 if enable else 0)
         return self.__is_success(dxl_result, dxl_error)
 
+    def get_torque(self):
+        """Read the torque.
+        
+        Return:
+            [0]: <bool> True is enabled. False is disabled.
+            [1]: <bool> True is a success. False is a fail.
+        """
+        torque, dxl_result, dxl_error = self.packet_handler.read1ByteTxRx(
+            self.port_handler, self.id, self.RAM['torque enable'])
+        return torque, self.__is_success(dxl_result, dxl_error)
+
+    def set_goal_velocity(self, dxl_unit):
+        """Write the [goal velocity] on the CONTROL TABLE.
+
+        Args:
+            dxl_unit: -(limit) ~ (limit) (1unit == 0.229rpm)
+        Return:
+            <bool> True is a success. False is a fail.
+        """
+        dxl_result, dxl_error = self.packet_handler.write4ByteTxRx(
+            self.port_handler, self.id, self.RAM['goal velocity'],
+            dxl_unit)
+        return self.__is_success(dxl_result, dxl_error)
+
     def set_goal_position(self, dxl_unit):
         """Write the [goal position] on the CONTROL TABLE.
 
@@ -202,14 +257,23 @@ class DxlMotor(object):
             dxl_unit)
         return self.__is_success(dxl_result, dxl_error)
 
+    def get_present_velocity(self):
+        """Read the [present velocity] from the CONTROL TABLE.
+
+        Return:
+            [0]: <int> This position value is the DxlUnit(1unit == 0.229rpm).
+            [1]: <bool> True is a success. False is a fail.
+        """
+        velocity, dxl_result, dxl_error = self.packet_handler.read4ByteTxRx(
+            self.port_handler, self.id, self.RAM['present velocity'])
+        return velocity, self.__is_success(dxl_result, dxl_error)
+
     def get_present_position(self):
         """Read the [present position] from the CONTROL TABLE.
 
-        Args:
-            dxl_unit: 0 ~ 4095
         Return:
-            <int> This position value is the DxlUnit(0 ~ 4095).
-            <bool> True is a success. False is a fail.
+            [0]: <int> This position value is the DxlUnit(0 ~ 4095).
+            [1]: <bool> True is a success. False is a fail.
         """
         position, dxl_result, dxl_error = self.packet_handler.read4ByteTxRx(
             self.port_handler, self.id, self.RAM['present position'])

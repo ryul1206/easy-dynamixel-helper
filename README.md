@@ -10,13 +10,17 @@
 
 This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
 
+```bash
+pip install dynamixel_helper --user
+```
+
 **Table of Contents**
 
+1. [ Features](#-Features)
+1. [ Simple Example](#-Simple-Example)
 1. [ Getting Started](#-Getting-Started)
     1. [Prerequisites](#Prerequisites)
     1. [Installation](#Installation)
-1. [ Simple Example](#-Simple-Example)
-1. [ Features](#-Features)
 1. [ Tutorials](#-Tutorials)
 1. [ Release Notes](#-Release-Notes)
 1. [ Contributing](#-Contributing)
@@ -24,13 +28,33 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 1. [ Maintainers](#-Maintainers)
 1. [ Licenses](#-Licenses)
 
+## 💎 Features
+
+- Baud rate auto-matching
+- Protocol auto-matching
+- Port auto-matching (*Easy connections in multi-USB*)
+- Motor configurations in JSON format
+- Support for Python 3 and 2
+- Make your code simple and clean
+- **Easy to use even for beginners.**
+
+## 🐣 Simple Example
+
+The following code is an example of turning on the motor torque.
+
+```python
+from dynamixel_helper import DxlHelper
+
+helper = DxlHelper("preset/{my_robot}.json")
+motor = helper.get_motor(0)  # id: 0
+motor.set_torque(True)
+```
+
 ## 🚀 Getting Started
 
 ### Prerequisites
 
 1. **pip (package manager)**
-
-   **CAUTION💥**: Please install the `pip` **before** installing the `Dynamixel SDK`. Otherwise, when you install this `Dynamixel Helper`, you will get an dependency error of `Dynamixel SDK`.
 
     ```bash
     # Python 2
@@ -43,30 +67,33 @@ This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive y
 
 2. **Dynamixel SDK**
 
-You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
+    **CAUTION💥**: Please install the `pip` **before** installing the `Dynamixel SDK`. Otherwise, when you install this `Dynamixel Helper`, you will get an dependency error of `Dynamixel SDK`.
 
-<details><summary>Click here: Dynamixel SDK Installation</summary>
-<p>
+    You need to install the official [Dynamixel SDK](https://github.com/ROBOTIS-GIT/DynamixelSDK) before using this helper.
 
-1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
+    <details><summary>Click here: Dynamixel SDK Installation</summary>
+    <p>
 
-    ```bash
-    git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
-    ```
-2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
+    1. Clone the official SDK repository into your custom folder, for example, I created `~/lib`.
 
-    ```bash
-    cd ${your_download_path}/DynamixelSDK/python
-    ```
+        ```bash
+        git clone https://github.com/ROBOTIS-GIT/DynamixelSDK.git
+        ```
 
-3. Run `setup.py` as administrator to install the library.
+    2. Go into the folder `/DynamixelSDK/python` of your cloned SDK.
 
-    ```bash
-    python setup.py install
-    ```
+        ```bash
+        cd ${your_download_path}/DynamixelSDK/python
+        ```
 
-</p>
-</details>
+    3. Run `setup.py` with `--user` option to install the library. Administrator privileges, a.k.a. `sudo`, are not recommended. More information [here](https://pages.charlesreid1.com/dont-sudo-pip/).
+
+        ```bash
+        python setup.py install --user
+        ```
+
+    </p>
+    </details>
 
 ### Installation
 
@@ -75,24 +102,6 @@ Simply type `pip` command below to install this helper.
 ```bash
 pip install dynamixel_helper --user
 ```
-
-## 🐣 Simple Example
-
-The following code is an example of turning on the motor torque.
-
-```python
-from dynamixel_helper import DxlHelper
-
-helper = DxlHelper("preset/{your_robot}.json")
-motor = helper.get_motor(0)  # id: 0
-motor.set_torque(True)
-```
-
-## 💎 Features
-
-- Motor configurations in JSON format
-- Support for Python 3 and 2
-- Easy multiple USB connections
 
 ## 🌱 Tutorials
 
