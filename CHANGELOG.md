@@ -18,7 +18,9 @@ TESTED
 
 (kor) 이제는 더이상 어떤 모터가 어떤 포트에 연결되어 있는지 확인하지 않아도 됩니다. 자동매칭 기능이 이 문제를 해결해 줄 것입니다.
 
-- **NEW**: **Auto matching process! (port, baud-rate, protocol)**
+- **NEW**: **Auto matching process for the port, baud-rate, and protocol**
+- **NEW**: **Auto keyword for the baud-rate, protocol**
+- **NEW**: The basic [tutorials](./tutorial/TUTORIAL.en.md)
 - **NEW**: Add the control table of `XM430-W250`
 - **NEW**: set_drive_mode, set_operating_mode, get_torque, set_goal_velocity, get_present_velocity
 

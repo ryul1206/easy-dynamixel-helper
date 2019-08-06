@@ -4,9 +4,15 @@
 
 <!-- [en] -->
 # Tutorials of Dynamixel Helper
+
+[Back to Homepage](https://github.com/ryul1206/easy-dynamixel-helper)
 <!-- [kr] -->
 # DXL 헬퍼에 대한 튜토리얼
+
+[홈페이지로 돌아가기](https://github.com/ryul1206/easy-dynamixel-helper)
 <!-- [common] -->
+
+🌏 [English](TUTORIAL.en.md), [한국어](TUTORIAL.kr.md)
 
 <!-- [en] -->
 **Important**
@@ -35,21 +41,34 @@ All beginner level tutorials are written for beginners who are not familiar with
 <!-- [common] -->
 
 <!-- [en] -->
-1. [Define Motors in `preset.json`](00_make_preset.en.md)
-2. [Torque On/Off](01_torque.en.md)
-3. [Position Control](02_position_control.en.md)
+1. [Define Motors in `preset.json`](make_preset.en.md)
 <!-- [kr] -->
-1. [`preset.json`으로 모터 정의하기](00_make_preset.kr.md)
-2. [토크 켜기/끄기](01_torque.kr.md)
-3. [위치 제어](02_position_control.kr.md)
+1. [`preset.json`으로 모터 정의하기](make_preset.kr.md)
+<!-- [common] -->
+<!-- [en] -->
+2. [Torque On/Off](torque.en.md)
+<!-- [kr] -->
+2. [토크 켜기/끄기](torque.kr.md)
+<!-- [common] -->
+<!-- [en] -->
+3. [Multiple USB ports](multiple_ports.en.md)
+<!-- [kr] -->
+3. [다중 USB 포트](multiple_ports.kr.md)
+<!-- [common] -->
+<!-- [en] -->
+4. [Position Control](position_control.en.md)
+<!-- [kr] -->
+4. [위치 제어](position_control.kr.md)
 <!-- [common] -->
 
 ---
 
-```
 <!-- [en] -->
 ## Intermediate Level
+
+Not yet.
 <!-- [kr] -->
 ## 중급 수준
+
+준비되지 않았습니다.
 <!-- [common] -->
-```

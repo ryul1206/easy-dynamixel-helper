@@ -7,7 +7,7 @@
 import json
 import dynamixel_sdk as dxlsdk
 
-import constant
+from .constant import _baudrates, _verbose_level, assert_verbosity
 from .dxl_motor import DxlMotor
 from .byteify import byteify
 
@@ -35,8 +35,8 @@ class DxlHelper(object):
             RuntimeError: If some motor has no ID
         """
         # Verbose
-        constant.assert_verbosity(verbosity)
-        self.verbosity = constant.verbose_level[verbosity]
+        assert_verbosity(verbosity)
+        self.verbosity = _verbose_level[verbosity]
 
         # Load preset
         with open(preset_file, 'r') as f:
@@ -71,7 +71,7 @@ class DxlHelper(object):
             else:
                 self.port_handlers[name] = {'handler': port_handler,
                                             'baud rate': None}
-                if self.verbosity >= constant.verbose_level['detailed']:
+                if self.verbosity >= _verbose_level['detailed']:
                     print("Helper: Succeeded to open the port: \""+name+"\"")
 
         ############################################
@@ -80,8 +80,15 @@ class DxlHelper(object):
         # The 'PacketHandler' requires 'protocol version' for initialization.
         # KEY: 'protocol version', VALUE: 'packet_handler'
 
-        # Duplicate cleaning
-        protocol_set = set(preset["protocol versions"])
+        # "auto" keywords
+        if isinstance(preset["protocol versions"], list):
+            # Duplicate cleaning
+            protocol_set = set(preset["protocol versions"])
+        elif preset["protocol versions"] == "auto":
+            protocol_set = [1.0, 2.0]
+        else:
+            print("Helper: [ERROR] There is a typo in the protocol of the preset file.")
+            raise NotImplementedError
         self.packet_handlers = {
             version: dxlsdk.PacketHandler(version) for version in protocol_set}
 
@@ -132,7 +139,7 @@ class DxlHelper(object):
                     self.packet_handlers, verbosity=verbosity)
             except Exception as inst:  # to catch all errors
                 logging['X'].append(motor_log)
-                if self.verbosity >= constant.verbose_level['detailed']:
+                if self.verbosity >= _verbose_level['detailed']:
                     print("Helper: One motor setup was skipped.")
                     print("        The reason is: \""+inst.__str__()+"\"")
                     raise inst
@@ -141,14 +148,14 @@ class DxlHelper(object):
                 self.__motors[motor['id']] = motorInstance
                 if motor['alias']:
                     self.__motors[motor['alias']] = motorInstance
-                if self.verbosity >= constant.verbose_level['detailed']:
+                if self.verbosity >= _verbose_level['detailed']:
                     print("Helper: One motor setup was completed.")
 
         ############################################
         #                 Log
         ############################################
 
-        if self.verbosity >= constant.verbose_level['minimal']:
+        if self.verbosity >= _verbose_level['minimal']:
             print("Helper: All motor setups have been completed.")
             print("        Success: {} motor(s) / Fail: {} motor(s)"
                   .format(len(logging['O']), len(logging['X'])))

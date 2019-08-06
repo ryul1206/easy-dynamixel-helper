@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name             = 'dynamixel_helper',
-    version          = '0.1.0',
+    version          = '1.0.0',
     author           = 'Hong-ryul Jung',
     author_email     = 'jung.hr.1206@gmail.com',
     description      = 'You can use this helper instead of the Dynamixel-SDK to speed up your work.',

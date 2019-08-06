@@ -2,15 +2,15 @@
 #              Auto Mode
 ############################################
 
-# baudrate = [
-#     9600,
-#     57600,
-#     115200,
-#     1000000,
-#     2000000,
-#     3000000,
-#     4000000,
-#     4500000]
+_baudrates = [
+    9600,
+    57600,
+    115200,
+    1000000,
+    2000000,
+    3000000,
+    4000000,
+    4500000]
 
 # protocol_version = [1.0, 2.0]
 
@@ -18,7 +18,7 @@
 #              Verbosity
 ############################################
 
-verbose_level = {'quiet': 0, 'minimal': 1, 'detailed': 2}
+_verbose_level = {'quiet': 0, 'minimal': 1, 'detailed': 2}
 
 
 def assert_verbosity(verbosity):

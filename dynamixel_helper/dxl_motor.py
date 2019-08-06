@@ -6,7 +6,7 @@ import json
 import dynamixel_sdk as dxlsdk
 from itertools import product
 
-import constant
+from .constant import _baudrates, _verbose_level, assert_verbosity
 from .byteify import byteify
 
 
@@ -42,8 +42,8 @@ class DxlMotor(object):
             RuntimeError: If the verbosity string is not in verbose_level
         """
         # Verbose
-        constant.assert_verbosity(verbosity)
-        self.verbosity = constant.verbose_level[verbosity]
+        assert_verbosity(verbosity)
+        self.verbosity = _verbose_level[verbosity]
 
         # Properties
         self.id = id_
@@ -70,7 +70,7 @@ class DxlMotor(object):
         self.packet_handler = None
         self.__find_correct_handle(port_handlers, baud_rates, packet_handlers)
 
-        if self.verbosity >= constant.verbose_level['detailed']:
+        if self.verbosity >= _verbose_level['detailed']:
             print("Helper: One motor instance was created. id: "+str(self.id))
 
     def __eq__(self, other):
@@ -87,16 +87,27 @@ class DxlMotor(object):
 
         Raises:
             RuntimeError: If there is no matched options
+            NotImplementedError: If there is a typo in the baud rate of the preset file.
         """
-        if self.verbosity >= constant.verbose_level['detailed']:
+        if self.verbosity >= _verbose_level['detailed']:
             print("Helper: [START] a validation of port and baud-rate.")
             print("           ==> ID:{}".format(self.id))
         # These are intended error!
         # So, change the verbosity level to 'quiet' temporarily.
         original_verbosity = self.verbosity
-        if self.verbosity <= constant.verbose_level['minimal']:
-            self.verbosity = constant.verbose_level['quiet']
+        if self.verbosity <= _verbose_level['minimal']:
+            self.verbosity = _verbose_level['quiet']
 
+        # "auto" keywords
+        if isinstance(baud_rates, list):
+            baud_list = baud_rates
+        elif baud_rates == "auto":
+            baud_list = _baudrates
+        else:
+            print("Helper: [ERROR] There is a typo in the baud rate of the preset file.")
+            raise NotImplementedError
+
+        # flags
         success = False
         failed_at_least_once = False
         
@@ -107,7 +118,7 @@ class DxlMotor(object):
 
             original_baud = port_handlers[port]['baud rate']
 
-            for baud in baud_rates:
+            for baud in baud_list:
                 if original_baud is None:
                     self.port_handler.setBaudRate(baud)
                 else:
@@ -126,7 +137,7 @@ class DxlMotor(object):
 
         self.verbosity = original_verbosity
 
-        if self.verbosity >= constant.verbose_level['detailed']:
+        if self.verbosity >= _verbose_level['detailed']:
             if failed_at_least_once:
                 print("Helper: ⤷ Do not worry, if the message you are seeing is")
                 print("            \"[TxRxResult] There is no status packet!\".")
@@ -160,11 +171,11 @@ class DxlMotor(object):
         if dxl_result != dxlsdk.COMM_SUCCESS:
             # [TxRxResult] There is no status packet!
             # motor power not connected
-            if self.verbosity >= constant.verbose_level['minimal']:
+            if self.verbosity >= _verbose_level['minimal']:
                 print(self.packet_handler.getTxRxResult(dxl_result))
             return False
         elif dxl_error != 0:
-            if self.verbosity >= constant.verbose_level['minimal']:
+            if self.verbosity >= _verbose_level['minimal']:
                 print(self.packet_handler.getRxPacketError(dxl_error))
             return False
         return True
