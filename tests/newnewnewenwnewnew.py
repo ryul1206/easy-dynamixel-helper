@@ -20,8 +20,13 @@ from byteify import byteify
 
 
 class DxlHelper(object):
-    """
+    """The main class of this package.
 
+    Attributes:
+        verbosity: <int>
+        port_handlers: {'/dev/ttyUSB':{'handler':PortHandler, 'baudrate':None}}
+        packet_handlers: {2.0:PacketHandler}
+        __motors: <dict> The ID is a key and motorInstance is a value.
     TODO:
         check alias when empty in json. Is None value correctly inside?
     """
@@ -29,8 +34,11 @@ class DxlHelper(object):
     def __init__(self, preset_file, verbosity='minimal'):
         """Inits
 
+        Args:
+            preset_file: The path of the \'<preset>.json\' file
+            verbosity: 'quiet' or 'minimal' or 'detailed'
         Raises:
-            df
+            RuntimeError: If some motor has no ID
         """
         # Verbose
         constant.assert_verbosity(verbosity)
@@ -53,7 +61,7 @@ class DxlHelper(object):
         # {
         #     "/dev/ttyUSB0": {
         #         "handler": PortHandler,
-        #         "baud rate": None
+        #         "baudrate": None
         # }
         self.port_handlers = {}
 
@@ -68,7 +76,7 @@ class DxlHelper(object):
                 raise inst
             else:
                 self.port_handlers[name] = {'handler': port_handler,
-                                            'baud rate': None}
+                                            'baudrate': None}
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: Succeeded to open the port: \""+name+"\"")
 
@@ -117,7 +125,6 @@ class DxlHelper(object):
             #     "alias": "joint_L1",
             #     "model": "XM430-W210"
             # }
-        self.num_motors = len(motor_list)
 
         # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
         self.__motors = {}
@@ -127,7 +134,7 @@ class DxlHelper(object):
             try:
                 motorInstance = DxlMotor(
                     motor['id'], motor['alias'], motor['model'],
-                    self.port_handlers, preset['baud rates'],
+                    self.port_handlers, preset['baudrates'],
                     self.packet_handlers,
                     verbosity=verbosity)
             except:  # to catch all errors
@@ -141,10 +148,6 @@ class DxlHelper(object):
                     self.__motors[motor['alias']] = motorInstance
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: One motor setup was completed.")
-            # finally:
-            #     pass
-            #     motor_log.append(motorInstance.port_name)
-            #     motor_log.append(motorInstance.baud)
 
         ############################################
         #                 Log
@@ -161,13 +164,22 @@ class DxlHelper(object):
                           .format(ox, log[0], log[1], log[2]))
 
     def __del__(self):
-        """"""
+        """Close the all ports."""
         for port in self.port_handlers.values():
             port['handler'].closePort()
 
     @staticmethod
     def __check_type_n_dupe(name, expected_type, value, list_like):
-        """
+        """Check the type is correct and values ​​are not duplicated.
+
+        Args:
+            name: Required for the error message
+            expected_type: The value should be this type.
+            value: This is the value to be checked.
+            list_like: The list you want to check for the duplicate.
+        Raises:
+            TypeError: If the \'value\' is not the \'expected_type\'
+            ValueError: If \'list_like\' already has the same elem as \'value\'
         """
         if not isinstance(value, expected_type):
             print("Helper: [ERROR] \"{}\" must be \'{}\', not \'{}\'."
@@ -179,23 +191,10 @@ class DxlHelper(object):
                   .format(name, value))
             raise ValueError
 
-    def get_motor(self, _id):
+    def get_motor(self, id_):
+        """Get an instance of the DxlMotor.
+
+        Args:
+            id_: Motor ID
         """
-        """
-        return self.__motors[_id]
-
-
-if __name__ == "__main__":
-
-    d = DxlHelper("minimal.json", verbosity='detailed')
-
-    def move(id_, v):
-        motor = d.get_motor(id_)
-        motor.set_torque(True)
-        dxl_unit, _ = motor.get_present_position()
-        print(motor.set_goal_position((dxl_unit + v) % 4096))
-
-    print("--------------------")
-    move(0, 500)
-    print("--------------------")
-    move(1, 2000)
+        return self.__motors[id_]

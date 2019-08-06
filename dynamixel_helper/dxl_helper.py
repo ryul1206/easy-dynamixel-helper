@@ -6,13 +6,20 @@
 
 import json
 import dynamixel_sdk as dxlsdk
+
+import .constant
 from .dxl_motor import DxlMotor
 from .byteify import byteify
 
 
 class DxlHelper(object):
-    """
+    """The main class of this package.
 
+    Attributes:
+        verbosity: <int>
+        port_handlers: {'/dev/ttyUSB':{'handler':PortHandler, 'baudrate':None}}
+        packet_handlers: {2.0:PacketHandler}
+        __motors: <dict> The ID is a key and motorInstance is a value.
     TODO:
         check alias when empty in json. Is None value correctly inside?
     """
@@ -20,8 +27,11 @@ class DxlHelper(object):
     def __init__(self, preset_file, verbosity='minimal'):
         """Inits
 
+        Args:
+            preset_file: The path of the \'<preset>.json\' file
+            verbosity: 'quiet' or 'minimal' or 'detailed'
         Raises:
-            df
+            RuntimeError: If some motor has no ID
         """
         # Verbose
         constant.assert_verbosity(verbosity)
@@ -40,33 +50,28 @@ class DxlHelper(object):
         #     linux: "/dev/ttyUSB0"
         #     mac: "/dev/tty.usbserial-*"
 
-        # e.g. { "/dev/ttyUSB0": PortHandler }
         self.port_handlers = {}
+        # e.g.
+        # {
+        #     "/dev/ttyUSB0": {
+        #         "handler": PortHandler,
+        #         "baudrate": None
+        # }
 
-        for port in preset["ports"]:
-            name = port['device']
-            self.__check_type_n_dupe('port.device',
-                                     str, name, self.port_handlers)
-            pth = dxlsdk.PortHandler(name)
-            # Open port
-            print(pth.openPort())
-            if pth.openPort():
+        # Open port
+        for name in preset['ports']:
+            self.__check_type_n_dupe('port', str, name, self.port_handlers)
+            port_handler = dxlsdk.PortHandler(name)
+            try:
+                port_handler.openPort()
+            except Exception as inst:
+                print("Helper: [ERROR] " + inst.__str__())
+                raise inst
+            else:
+                self.port_handlers[name] = {'handler': port_handler,
+                                            'baudrate': None}
                 if self.verbosity >= constant.verbose_level['detailed']:
                     print("Helper: Succeeded to open the port: \""+name+"\"")
-            else:
-                print("Helper: [ERROR] Failed to open the port: \""+name+"\"")
-                raise RuntimeError
-            # Set baudrate
-            if pth.setBaudRate(port['baudrate']):
-                if self.verbosity >= constant.verbose_level['detailed']:
-                    print("Helper: The baudrate of \"{}\" is {}."
-                          .format(name, port['baudrate']))
-            else:
-                print("Helper: [ERROR] Failed to set the baudrate of \"{}\""
-                      .format(name))
-                raise RuntimeError
-            # Append
-            self.port_handlers[name] = pth
 
         ############################################
         #             Packet Handlers
@@ -75,8 +80,7 @@ class DxlHelper(object):
         # KEY: 'protocol version', VALUE: 'packet_handler'
 
         # Duplicate cleaning
-        protocol_set = set(
-            [port['protocol version'] for port in preset["ports"]])
+        protocol_set = set(preset["protocol versions"])
         self.packet_handlers = {
             version: dxlsdk.PacketHandler(version) for version in protocol_set}
 
@@ -91,8 +95,7 @@ class DxlHelper(object):
         for motor in preset['motors']:
             # ID Validation
             try:
-                self.__check_type_n_dupe('motor.id',
-                                         int, motor['id'], id_set)
+                self.__check_type_n_dupe('motor.id', int, motor['id'], id_set)
             except KeyError:
                 print("Helper: [ERROR] One motor has no ID.")
                 print("        Please check again: "+preset_file)
@@ -102,8 +105,7 @@ class DxlHelper(object):
             # Alias Validation
             try:
                 if motor['alias']:
-                    self.__check_type_n_dupe('motor.alias',
-                                             str, motor['alias'], alias_set)
+                    self.__check_type_n_dupe('motor.alias', str, motor['alias'], alias_set)
                     alias_set.add(motor['alias'])
                 else:
                     motor['alias'] = None
@@ -116,18 +118,17 @@ class DxlHelper(object):
             #     "alias": "joint_L1",
             #     "model": "XM430-W210"
             # }
-        self.num_motors = len(motor_list)
 
         # KEY: 'robotID' or 'alias', VALUE: 'DxlMotor'
         self.__motors = {}
         logging = {'O': [], 'X': []}
         for motor in motor_list:
-            motor_log = (motor['id'], motor['alias'], motor['model'])
+            motor_log = [motor['id'], motor['alias'], motor['model']]
             try:
                 motorInstance = DxlMotor(
                     motor['id'], motor['alias'], motor['model'],
-                    self.port_handlers, self.packet_handlers,
-                    verbosity=verbosity)
+                    self.port_handlers, preset['baudrates'],
+                    self.packet_handlers, verbosity=verbosity)
             except:  # to catch all errors
                 logging['X'].append(motor_log)
                 if self.verbosity >= constant.verbose_level['detailed']:
@@ -151,17 +152,26 @@ class DxlHelper(object):
             for ox, logs in logging.items():
                 logs.sort()
                 for log in logs:
-                    print("          ({}) id: {}, alias: {}, model: {}"
+                    print("          ({}) id:{}, alias:{}, model:{}"
                           .format(ox, log[0], log[1], log[2]))
 
     def __del__(self):
-        """"""
+        """Close the all ports."""
         for port in self.port_handlers.values():
-            port.closePort()
+            port['handler'].closePort()
 
     @staticmethod
     def __check_type_n_dupe(name, expected_type, value, list_like):
-        """
+        """Check the type is correct and values ​​are not duplicated.
+
+        Args:
+            name: Required for the error message
+            expected_type: The value should be this type.
+            value: This is the value to be checked.
+            list_like: The list you want to check for the duplicate.
+        Raises:
+            TypeError: If the \'value\' is not the \'expected_type\'
+            ValueError: If \'list_like\' already has the same elem as \'value\'
         """
         if not isinstance(value, expected_type):
             print("Helper: [ERROR] \"{}\" must be \'{}\', not \'{}\'."
@@ -173,7 +183,10 @@ class DxlHelper(object):
                   .format(name, value))
             raise ValueError
 
-    def get_motor(self, _id):
+    def get_motor(self, id_):
+        """Get an instance of the DxlMotor.
+
+        Args:
+            id_: Motor ID
         """
-        """
-        return self.__motors[_id]
+        return self.__motors[id_]
