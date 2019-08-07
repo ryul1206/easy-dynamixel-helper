@@ -227,6 +227,45 @@ pip install dynamixel_helper --user
 [Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
 
 <!-- [en] -->
+## 🔭 Coverage
+<!-- [kr] -->
+## 🔭 커버리지
+<!-- [common] -->
+
+**v1.0.0**
+
+<!-- [en] -->
+### Model List
+<!-- [kr] -->
+### 모델 리스트
+
+아래 링크된 주소는 영문판 메뉴얼이지만 로보티즈에서는 한글 메뉴얼도 제공하고 있습니다. 한글 메뉴얼은 [여기](http://emanual.robotis.com/docs/kr/)에서 확인해주세요.
+<!-- [common] -->
+
+- [XM430-W210](http://emanual.robotis.com/docs/en/dxl/x/xm430-w210/#control-table-of-eeprom-area)
+- [XL430-W250](http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#control-table-of-eeprom-area)
+
+<!-- [en] -->
+### Control Table
+
+Different models have slightly different control tables. Please check the documentation for each model. Just click the model name above to go to the document.
+<!-- [kr] -->
+### 컨트롤 테이블
+
+모터마다 접근할 수 있는 컨트롤 테이블이 다릅니다. 이것은 각 모터의 문서를 확인해주세요. 바로 위에서 모델 이름을 클릭하면 문서로 이동할 수 있습니다.
+<!-- [common] -->
+
+- EEPROM section
+    - drive mode (w)
+    - operating mode (w)
+- RAM section
+    - torque (r/w)
+    - goal velocity (w)
+    - goal position (w)
+    - present velocity (r)
+    - present position (r)
+
+<!-- [en] -->
 ## 💌 Contributing
 <!-- [kr] -->
 ## 💌 기여하기

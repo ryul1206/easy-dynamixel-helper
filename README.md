@@ -23,6 +23,9 @@ pip install dynamixel_helper --user
     1. [Installation](#Installation)
 1. [ Tutorials](#-Tutorials)
 1. [ Release Notes](#-Release-Notes)
+1. [ Coverage](#-Coverage)
+    1. [Model List](#Model-List)
+    1. [Control Table](#Control-Table)
 1. [ Contributing](#-Contributing)
     1. [Style Guide](#Style-Guide)
 1. [ Maintainers](#-Maintainers)
@@ -111,6 +114,29 @@ pip install dynamixel_helper --user
 
 
 [Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
+
+## 🔭 Coverage
+
+**v1.0.0**
+
+### Model List
+
+- [XM430-W210](http://emanual.robotis.com/docs/en/dxl/x/xm430-w210/#control-table-of-eeprom-area)
+- [XL430-W250](http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#control-table-of-eeprom-area)
+
+### Control Table
+
+Different models have slightly different control tables. Please check the documentation for each model. Just click the model name above to go to the document.
+
+- EEPROM section
+    - drive mode (w)
+    - operating mode (w)
+- RAM section
+    - torque (r/w)
+    - goal velocity (w)
+    - goal position (w)
+    - present velocity (r)
+    - present position (r)
 
 ## 💌 Contributing
 
