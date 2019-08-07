@@ -35,6 +35,14 @@ TESTED
 <!--  -->
 
 - **TESTED**: New style json.(XM430-W210, 2 ports, 2 motors, Ubuntu 18.04)
+    - alias
+    - verbosity levels
+    - set_operating_mode
+    - set_goal_velocity
+    - get_torque
+    - set_torque
+    - set_goal_position
+    - get_present_position
 
 ## 0.0.0 (2019.07.22)
 

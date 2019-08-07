@@ -29,8 +29,8 @@ def assert_verbosity(verbosity):
     Raises:
         RuntimeError: If the verbosity string is not in verbose_level
     """
-    if verbosity not in verbose_level:
+    if verbosity not in _verbose_level:
         print("Helper: [ERROR]")
         print("        An undefined verbosity option has been detected.")
-        print("        Supported options: {}".format(verbose_level.keys()))
+        print("        Supported options: {}".format(_verbose_level.keys()))
         raise RuntimeError

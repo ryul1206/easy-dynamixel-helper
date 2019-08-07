@@ -5,12 +5,12 @@
   "motors":[
     {
       "id": 0,
-      "alias": "joint_1",
+      "alias": "joint_0",
       "model": "XM430-W210"
     },
     {
       "id": 1,
-      "alias": "joint_2",
+      "alias": "joint_1",
       "model": "XM430-W210"
     }
   ]

@@ -354,3 +354,8 @@ The contents of this repository are subject to the [MIT License](https://github.
 <!-- [kr] -->
 - 다이나믹셀 SDK는 [Apache-2.0](https://github.com/ROBOTIS-GIT/DynamixelSDK/blob/master/LICENSE)을 따릅니다.
 <!-- [common] -->
+
+<!-- [ignore] -->
+python3 setup.py sdist bdist_wheel --universal 
+python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+python3 -m twine upload dist/*

@@ -21,10 +21,14 @@
 ---
 
 <!-- [en] -->
+# Control with ID
+
 In the previous tutorial, we created `my_preset.json` for one motor. Now we are going to change the torque of this motor.
 
 > Make sure the motor power is on before executing the code below.
 <!-- [kr] -->
+# ID로 제어하기
+
 이전 튜토리얼에서 하나의 모터를 위한 `my_preset.json`을 만들었습니다. 이제 우리는 이 모터의 토크를 변경해보겠습니다.
 
 > 아래의 코드를 실행하기 전에 모터의 전원이 켜져 있는지 확인하세요.
@@ -48,6 +52,25 @@ Since the program was terminated without turning off the torque, the torque of t
 
 ```python
 motor.set_torque(False)
+```
+
+<!-- [en] -->
+## Control with Alias
+
+You ​​can define an alias in `my_preset.json` and use like an ID.
+<!-- [kr] -->
+## 별칭으로 제어하기
+
+`my_preset.json`에서 별칭(Alias)를 정의하여 ID와 동일하게 사용할 수 있습니다.
+<!-- [common] -->
+
+```python
+from dynamixel_helper import DxlHelper
+
+helper = DxlHelper("my_preset.json")
+
+motor = helper.get_motor('joint_0')
+motor.set_torque(True)
 ```
 
 ---
