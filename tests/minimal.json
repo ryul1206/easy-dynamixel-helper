@@ -1,0 +1,17 @@
+{
+  "ports":[ "/dev/ttyUSB0", "/dev/ttyUSB1" ],
+  "baud rates":[ 57600, 9600 ],
+  "protocol versions":[ 2.0 ],
+  "motors":[
+    {
+      "id": 0,
+      "alias": "joint_0",
+      "model": "XM430-W210"
+    },
+    {
+      "id": 1,
+      "alias": "joint_1",
+      "model": "XM430-W210"
+    }
+  ]
+}
