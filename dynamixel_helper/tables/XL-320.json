@@ -1,0 +1,37 @@
+{
+  "eeprom": {
+    "model number": 0,
+    "firmware version": 2,
+    "id": 3,
+    "baud rate": 4,
+    "return delay time": 5,
+    "cw angle limit": 6,
+    "ccw angle limit": 8,
+    "control mode": 11,
+    "temperature limit": 12,
+    "min voltage limit": 13,
+    "max voltage limit": 14,
+    "max torque": 15,
+    "status return level": 17,
+    "shutdown": 18
+  },
+  "ram": {
+    "torque enable": 24,
+    "led": 25,
+    "d gain": 27,
+    "i gain": 28,
+    "p gain": 29,
+    "goal position": 30,
+    "moving speed": 32,
+    "torque limit": 35,
+    "present position": 37,
+    "present speed": 39,
+    "present load": 41,
+    "present voltage": 45,
+    "present temperature": 46,
+    "registered": 47,
+    "moving": 49,
+    "hardware error status": 50,
+    "punch": 51
+  }
+}
