@@ -45,15 +45,76 @@ Write down which USB port the motor is connected to. The names of the ports vary
 - Mac: `/dev/tty.usbserial-*`
 
 For example, if your operating system is Linux and connected on `/dev/ttyUSB0`, you can write:
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+}
+```
+
 If you are using multiple USB devices, I will explain that in [another tutorial](multiple_ports.en.md). For now, let's focus on just one motor.
 
 ### "baud rates"
 
 Now let's write the baud rate. The default baud rate for Dynamixel is usually `57600`.
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+    "baud rates":[ 57600 ],
+}
+```
+
 If you don't remember the baud rate, don't worry. Use the Auto-keyword and then the helper will find the right value for you! But caution that there is no `[ ]` when you write `"auto"`.
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+    "baud rates": "auto",
+}
+```
+
+### "protocol versions"
+
 Writing a protocol is the same. There are `1.0` and `2.0` protocol versions of Dynamixel, and different versions are used for each motor. All the latest Dynamixels are `2.0`.
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+    "baud rates": "auto",
+    "protocol versions":[ 2.0 ],
+}
+```
+
 Actually, you can also use the keyword `"auto"` in protocols.
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+    "baud rates": "auto",
+    "protocol versions": "auto",
+}
+```
+
+### "motors"
+
 All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_1`, then the completed `my_preset.json` looks like this:
+
+```json
+{
+    "ports":[ "/dev/ttyUSB0" ],
+    "baud rates": "auto",
+    "protocol versions": "auto",
+    "motors":[
+        {
+            "id": 0,
+            "alias": "joint_0",
+            "model": "XM430-W210"
+        }
+    ]
+}
+```
+
 ### Completed Preset
 
 If you didn't use `"auto"`, the final `my_preset.json` would look like this:

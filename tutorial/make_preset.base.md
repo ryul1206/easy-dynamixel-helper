@@ -109,7 +109,7 @@ Write down which USB port the motor is connected to. The names of the ports vary
 For example, if your operating system is Linux and connected on `/dev/ttyUSB0`, you can write:
 <!-- [kr] -->
 예를 들어, 지금 사용하는 운영체제가 리눅스이고, `/dev/ttyUSB0`에 연결되어 있다면 다음과 같이 쓸 수 있습니다.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
@@ -129,7 +129,7 @@ If you are using multiple USB devices, I will explain that in [another tutorial]
 Now let's write the baud rate. The default baud rate for Dynamixel is usually `57600`.
 <!-- [kr] -->
 조금 전에 포트(port)를 적었으니 이제는 보드레이트(baud rate)를 적어보겠습니다. 다이나믹셀의 보드레이트의 기본값은 보통 `57600`입니다.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
@@ -142,7 +142,7 @@ Now let's write the baud rate. The default baud rate for Dynamixel is usually `5
 If you don't remember the baud rate, don't worry. Use the Auto-keyword and then the helper will find the right value for you! But caution that there is no `[ ]` when you write `"auto"`.
 <!-- [kr] -->
 만약에 보드레이트가 기억나지 안 나더라도 걱정하지마세요. 오토 키워드를 적어두면 헬퍼가 알아서 맞는 값을 찾아줍니다! `"audo"`를 적을 때에는 `[ ]`가 없음에 주의하세요.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
@@ -157,7 +157,7 @@ If you don't remember the baud rate, don't worry. Use the Auto-keyword and then 
 Writing a protocol is the same. There are `1.0` and `2.0` protocol versions of Dynamixel, and different versions are used for each motor. All the latest Dynamixels are `2.0`.
 <!-- [kr] -->
 프로토콜 작성도 동일합니다. 다이나믹셀의 프로토콜 버전은 `1.0`과 `2.0`이 있고, 모터마다 사용하는 버전이 다릅니다. 최신 다이나믹셀은 모두 `2.0`입니다.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
@@ -171,7 +171,7 @@ Writing a protocol is the same. There are `1.0` and `2.0` protocol versions of D
 Actually, you can also use the keyword `"auto"` in protocols.
 <!-- [kr] -->
 사실 프로토콜에도 `"auto"` 키워드를 쓸 수 있습니다.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
@@ -187,7 +187,7 @@ Actually, you can also use the keyword `"auto"` in protocols.
 All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_1`, then the completed `my_preset.json` looks like this:
 <!-- [kr] -->
 모터 정보에는 ID와 모델명이 있습니다. 뿐만 아니라 코딩을 좀더 알아보기 쉽게 하기 위해서 모터의 별명(alias)을 지어줄 수도 있습니다. 모터 ID가 `0`이고 모델이 `XM430-W210`이면서 `joint_1`이라고 부르고 싶다면 완성된 `my_preset.json`은 다음과 같습니다.
-<!-- common -->
+<!-- [common] -->
 
 ```json
 {
