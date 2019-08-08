@@ -184,9 +184,9 @@ Actually, you can also use the keyword `"auto"` in protocols.
 ### "motors"
 
 <!-- [en] -->
-All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_1`, then the completed `my_preset.json` looks like this:
+All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_0`, then the completed `my_preset.json` looks like this:
 <!-- [kr] -->
-모터 정보에는 ID와 모델명이 있습니다. 뿐만 아니라 코딩을 좀더 알아보기 쉽게 하기 위해서 모터의 별명(alias)을 지어줄 수도 있습니다. 모터 ID가 `0`이고 모델이 `XM430-W210`이면서 `joint_1`이라고 부르고 싶다면 완성된 `my_preset.json`은 다음과 같습니다.
+모터 정보에는 ID와 모델명이 있습니다. 뿐만 아니라 코딩을 좀더 알아보기 쉽게 하기 위해서 모터의 별명(alias)을 지어줄 수도 있습니다. 모터 ID가 `0`이고 모델이 `XM430-W210`이면서 `joint_0`이라고 부르고 싶다면 완성된 `my_preset.json`은 다음과 같습니다.
 <!-- [common] -->
 
 ```json
