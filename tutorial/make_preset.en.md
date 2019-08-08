@@ -98,7 +98,7 @@ Actually, you can also use the keyword `"auto"` in protocols.
 
 ### "motors"
 
-All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_1`, then the completed `my_preset.json` looks like this:
+All motor has an ID and model name. You can also alias motors to make coding easier to read. If the motor ID is `0` and the model is `XM430-W210` and you want to call it `joint_0`, then the completed `my_preset.json` looks like this:
 
 ```json
 {

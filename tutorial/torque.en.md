@@ -9,7 +9,7 @@
 
 # Control with ID
 
-In the previous tutorial, we created `my_preset.json` for one motor. Now we are going to change the torque of this motor.
+In the previous tutorial, we created `my_preset.json` for one motor. Now we are going to change the torque of this motor. Create a new Python file named `torque.py`.
 
 > Make sure the motor power is on before executing the code below.
 
@@ -21,6 +21,12 @@ helper = DxlHelper("my_preset.json")
 motor_id = 0
 motor = helper.get_motor(motor_id)
 motor.set_torque(True)
+```
+
+Now let's do it. Opening a port on Linux requires `root` permission, so I am going to add a `sudo` command.
+
+```bash
+sudo python torque.py
 ```
 
 Since the program was terminated without turning off the torque, the torque of the motor will remain on. You can turn off the torque simply by replacing the last line above with:
