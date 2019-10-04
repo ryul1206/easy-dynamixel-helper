@@ -141,7 +141,7 @@ Now let's write the baud rate. The default baud rate for Dynamixel is usually `5
 <!-- [en] -->
 If you don't remember the baud rate, don't worry. Use the Auto-keyword and then the helper will find the right value for you! But caution that there is no `[ ]` when you write `"auto"`.
 <!-- [kr] -->
-만약에 보드레이트가 기억나지 안 나더라도 걱정하지마세요. 오토 키워드를 적어두면 헬퍼가 알아서 맞는 값을 찾아줍니다! `"audo"`를 적을 때에는 `[ ]`가 없음에 주의하세요.
+만약에 보드레이트가 기억나지 안 나더라도 걱정하지마세요. 오토 키워드를 적어두면 헬퍼가 알아서 맞는 값을 찾아줍니다! `"auto"`를 적을 때에는 `[ ]`가 없음에 주의하세요.
 <!-- [common] -->
 
 ```json

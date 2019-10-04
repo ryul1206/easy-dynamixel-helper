@@ -1,9 +1,10 @@
 # 쉬운 다이나믹셀 헬퍼
 
-![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)
+[![PyPI](https://img.shields.io/pypi/v/dynamixel-helper.svg)](https://pypi.org/project/dynamixel-helper/)
 [![Downloads](https://pepy.tech/badge/dynamixel-helper)](https://pepy.tech/project/dynamixel-helper)
-![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)
-![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)
+[![GitHub](https://img.shields.io/github/license/ryul1206/easy-dynamixel-helper.svg)](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/LICENSE)
+[![CodeFactor](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper/badge/master)](https://www.codefactor.io/repository/github/ryul1206/easy-dynamixel-helper)
+[![Multilingual Markdown Generator](https://img.shields.io/badge/markdown-multilingual%20🌐-ff69b4.svg)](https://github.com/ryul1206/multilingual-markdown)
 
 🌏 [English](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.md),
 [한국어](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.kr.md)
