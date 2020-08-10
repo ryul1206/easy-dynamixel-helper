@@ -356,5 +356,9 @@ The contents of this repository are subject to the [MIT License](https://github.
 **PyPI Uploading...**
 
 python3 setup.py sdist bdist_wheel --universal 
+
+test upload
 python3 -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+deploy
 python3 -m twine upload dist/*
