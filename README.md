@@ -9,7 +9,7 @@
 🌏 [English](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.md),
 [한국어](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/README.kr.md)
 
-This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works.
+This helper is a wrapper for the Dynamixel-SDK. With this, configure and drive your motor more quickly. You do not need to know how the SDK works. In other words, this helper makes it easy to modify the control table.
 
 ```bash
 pip install dynamixel_helper --user
@@ -24,7 +24,7 @@ pip install dynamixel_helper --user
     1. [Installation](#Installation)
 1. [ Tutorials](#-Tutorials)
 1. [ Release Notes](#-Release-Notes)
-1. [ Coverage](#-Coverage)
+1. [ Current Coverage](#-Current-Coverage)
     1. [Model List](#Model-List)
     1. [Control Table](#Control-Table)
 1. [ Contributing](#-Contributing)
@@ -116,14 +116,16 @@ pip install dynamixel_helper --user
 
 [Go to release notes](https://github.com/ryul1206/easy-dynamixel-helper/blob/master/CHANGELOG.md#Release-Notes)
 
-## 🔭 Coverage
-
-**v1.0.0**
+## 🔭 Current Coverage
 
 ### Model List
 
-- [XM430-W210](http://emanual.robotis.com/docs/en/dxl/x/xm430-w210/#control-table-of-eeprom-area)
-- [XL430-W250](http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#control-table-of-eeprom-area)
+- Tested models
+  - [XM430-W210](http://emanual.robotis.com/docs/en/dxl/x/xm430-w210/#control-table-of-eeprom-area)
+  - [XL430-W250](http://emanual.robotis.com/docs/en/dxl/x/xl430-w250/#control-table-of-eeprom-area)
+- Non-tested models (Only the control tables are included.)
+  - [AX-12W](https://emanual.robotis.com/docs/en/dxl/ax/ax-12w/#control-table-of-eeprom-area)
+  - [XL-320](https://emanual.robotis.com/docs/en/dxl/x/xl320/#control-table-of-eeprom-area)
 
 ### Control Table
 
